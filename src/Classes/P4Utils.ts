@@ -14,7 +14,32 @@ class P4Utils {
     ];
   }
 
-  static winpositionForColomns(board: string[][]): number[][] | null {
+  static winningPositions(board: string[][]): number[][] | null {
+    const winningPositions: number[][] = [];
+
+    const wpc = P4Utils.winpositionForColomns(board);
+    if (wpc !== null) {
+      wpc.forEach((value) => winningPositions.push(value));
+    }
+
+    const wpr = P4Utils.winpositionForRows(board);
+    if (wpr !== null) {
+      wpr.forEach((value) => winningPositions.push(value));
+    }
+
+    const wpo = P4Utils.winpositionForDiagonals(board);
+    if (wpo !== null) {
+      wpo.forEach((value) => winningPositions.push(value));
+    }
+
+    if (winningPositions.length === 0) {
+      return null;
+    }
+
+    return winningPositions;
+  }
+
+  private static winpositionForColomns(board: string[][]): number[][] | null {
     let count = 0;
     let currentPlayer = '';
 
@@ -46,7 +71,7 @@ class P4Utils {
     return null;
   }
 
-  static winpositionForDiagonals(board: string[][]): number[][] | null {
+  private static winpositionForDiagonals(board: string[][]): number[][] | null {
     // let count = 0;
     // let currentPlayer = '';
 
@@ -57,7 +82,7 @@ class P4Utils {
     return null;
   }
 
-  static winpositionForRows(board: string[][]): number[][] | null {
+  private static winpositionForRows(board: string[][]): number[][] | null {
     let count = 0;
     let currentPlayer = '';
 

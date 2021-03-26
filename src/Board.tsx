@@ -3,7 +3,7 @@ import './App.css';
 import P4Utils from './Classes/P4Utils';
 
 function Board() {
-  const [squares, setSquares] = useState(P4Utils.board());
+  const [board, setBoard] = useState(P4Utils.board());
 
   const [player, setPlayer] = useState('red');
   const [winner, setWinner] = useState<string | null>(null);
@@ -14,29 +14,19 @@ function Board() {
 
   function setVictory(winnerName: string, positions: number[][]) {
     setWinner(winnerName);
-    const squaresCopy = [...squares];
+    const squaresCopy = [...board];
 
     positions.forEach((value) => {
       const [row, column] = value;
       squaresCopy[row][column] = 'yellow';
     });
-    setSquares(squaresCopy);
+    setBoard(squaresCopy);
   }
 
   function checkVictory() {
-    const wpc = P4Utils.winpositionForColomns(squares);
+    const wpc = P4Utils.winningPositions(board);
     if (wpc !== null) {
       setVictory(player, wpc);
-    }
-
-    const wpr = P4Utils.winpositionForRows(squares);
-    if (wpr !== null) {
-      setVictory(player, wpr);
-    }
-
-    const wpo = P4Utils.winpositionForDiagonals(squares);
-    if (wpo !== null) {
-      setVictory(player, wpo);
     }
   }
 
@@ -55,7 +45,7 @@ function Board() {
 
   function renderSquare(row: number, column: number) {
     const styles = {
-      backgroundColor: color(squares[row][column]),
+      backgroundColor: color(board[row][column]),
     };
 
     return (
@@ -85,19 +75,19 @@ function Board() {
 
   function selectColumn(column: number) {
     const row = availableRowIn(column);
-    if (row === -1) {
+    if (row === -1 || winner != null) {
       return;
     }
-    const squaresCopy = [...squares];
+    const squaresCopy = [...board];
     squaresCopy[row][column] = player;
-    setSquares(squaresCopy);
+    setBoard(squaresCopy);
     checkVictory();
     setNextPlayer();
   }
 
   function availableRowIn(column: number): number {
     let lastIndex = -1;
-    squares.forEach((value, index) => {
+    board.forEach((value, index) => {
       if (value[column] === '') {
         lastIndex = index;
       }
@@ -107,7 +97,7 @@ function Board() {
 
   function restart() {
     setWinner(null);
-    setSquares(P4Utils.board());
+    setBoard(P4Utils.board());
   }
 
   function WinnerComponent() {
@@ -127,7 +117,7 @@ function Board() {
     <div>
       {winner === null ? <h6>player: {player}</h6> : <WinnerComponent />}
 
-      {squares.map((value, index) => {
+      {board.map((value, index) => {
         return renderRow(value, index);
       })}
     </div>
