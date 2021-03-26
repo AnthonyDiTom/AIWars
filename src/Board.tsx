@@ -1,25 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
+import P4Utils from './Classes/P4Utils';
 
 function Board() {
-  function board(): string[][] {
-    return [
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-    ];
-  }
-
-  const [squares, setSquares] = useState(board());
+  const [squares, setSquares] = useState(P4Utils.board());
 
   const [player, setPlayer] = useState('red');
   const [winner, setWinner] = useState<string | null>(null);
-
-  const columsNumbers = 7;
-  const rowsNumber = 6;
 
   function setNextPlayer() {
     setPlayer(player === 'red' ? 'blue' : 'red');
@@ -37,95 +24,20 @@ function Board() {
   }
 
   function checkVictory() {
-    const wpc = winpositionForColomns();
+    const wpc = P4Utils.winpositionForColomns(squares);
     if (wpc !== null) {
       setVictory(player, wpc);
     }
 
-    const wpr = winpositionForRows();
+    const wpr = P4Utils.winpositionForRows(squares);
     if (wpr !== null) {
       setVictory(player, wpr);
     }
 
-    const wpo = winpositionForDiagonals();
+    const wpo = P4Utils.winpositionForDiagonals(squares);
     if (wpo !== null) {
       setVictory(player, wpo);
     }
-  }
-
-  function winpositionForColomns(): number[][] | null {
-    let count = 0;
-    let currentPlayer = '';
-
-    let rowIndex = 0;
-    let columnIndex = 0;
-
-    let winningPositions = [];
-
-    while (columnIndex < columsNumbers) {
-      while (rowIndex < rowsNumber) {
-        if (currentPlayer !== squares[rowIndex][columnIndex]) {
-          currentPlayer = squares[rowIndex][columnIndex];
-          winningPositions = [];
-          count = 0;
-        }
-        winningPositions.push([rowIndex, columnIndex]);
-        count += 1;
-
-        if (count === 4 && currentPlayer !== '') {
-          return winningPositions;
-        }
-        rowIndex += 1;
-      }
-      rowIndex = 0;
-      count = 0;
-      columnIndex += 1;
-    }
-
-    return null;
-  }
-
-  function winpositionForDiagonals(): number[][] | null {
-    // let count = 0;
-    // let currentPlayer = '';
-
-    // let rowIndex = 0;
-    // let columnIndex = 0;
-
-    // let winningPositions = [];
-    return null;
-  }
-
-  function winpositionForRows(): number[][] | null {
-    let count = 0;
-    let currentPlayer = '';
-
-    let rowIndex = 0;
-    let columnIndex = 0;
-
-    let winningPositions = [];
-
-    while (rowIndex < rowsNumber) {
-      while (columnIndex < columsNumbers) {
-        if (currentPlayer !== squares[rowIndex][columnIndex]) {
-          currentPlayer = squares[rowIndex][columnIndex];
-          winningPositions = [];
-          count = 0;
-        }
-        winningPositions.push([rowIndex, columnIndex]);
-        count += 1;
-
-        if (count === 4 && currentPlayer !== '') {
-          return winningPositions;
-        }
-        columnIndex += 1;
-      }
-      columnIndex = 0;
-      count = 0;
-      rowIndex += 1;
-    }
-
-    return null;
   }
 
   function color(id: string): string {
@@ -195,7 +107,7 @@ function Board() {
 
   function restart() {
     setWinner(null);
-    setSquares(board());
+    setSquares(P4Utils.board());
   }
 
   function WinnerComponent() {
