@@ -12,9 +12,79 @@ function Board() {
   ]);
 
   const [player, setPlayer] = useState('red');
+  const [winner, setWinner] = useState<string | null>(null);
+
+  const columsNumbers = 7;
+  const rowsNumber = 6;
 
   function setNextPlayer() {
     setPlayer(player === 'red' ? 'blue' : 'red');
+  }
+
+  function checkVictory(): string | null {
+    const wfc = winnerForColomns();
+    if (wfc !== null) {
+      setWinner(wfc);
+      return wfc;
+    }
+    const wfr = winnerForRows();
+    if (wfr !== null) {
+      setWinner(wfr);
+      return wfr;
+    }
+
+    return null;
+  }
+
+  function winnerForColomns(): string | null {
+    let count = 0;
+    let currentPlayer = '';
+
+    let rowIndex = 0;
+    let columnIndex = 0;
+
+    while (columnIndex < columsNumbers) {
+      while (rowIndex < rowsNumber) {
+        if (currentPlayer !== squares[rowIndex][columnIndex]) {
+          currentPlayer = squares[rowIndex][columnIndex];
+          count = 0;
+        }
+
+        count += 1;
+
+        if (count === 4 && currentPlayer !== '') {
+          return currentPlayer;
+        }
+        rowIndex += 1;
+      }
+      rowIndex = 0;
+      count = 0;
+      columnIndex += 1;
+    }
+
+    return null;
+  }
+
+  function winnerForRows(): string | null {
+    let count = 0;
+    let currentPlayer = '';
+    // eslint-disable-next-line no-restricted-syntax
+    for (const row of squares) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const value of row) {
+        if (currentPlayer !== value) {
+          currentPlayer = value;
+          count = 0;
+        }
+        currentPlayer = value;
+        count += 1;
+        if (count === 4 && value !== '') {
+          return value;
+        }
+      }
+      count = 0;
+    }
+    return null;
   }
 
   function color(id: string): string {
@@ -64,6 +134,7 @@ function Board() {
     const squaresCopy = [...squares];
     squaresCopy[row][column] = player;
     setSquares(squaresCopy);
+    checkVictory();
     setNextPlayer();
   }
 
@@ -79,7 +150,12 @@ function Board() {
 
   return (
     <div>
-      <h6>player: {player}</h6>
+      {winner === null ? (
+        <h6>player: {player}</h6>
+      ) : (
+        <h6>{winner} is the winner !</h6>
+      )}
+
       {squares.map((value, index) => {
         return renderRow(value, index);
       })}
