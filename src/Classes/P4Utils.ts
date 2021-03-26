@@ -3,7 +3,7 @@ class P4Utils {
 
   static rowsNumber = 6;
 
-  static board(): string[][] {
+  static board = (): string[][] => {
     return [
       ['', '', '', '', '', '', ''],
       ['', '', '', '', '', '', ''],
@@ -12,7 +12,7 @@ class P4Utils {
       ['', '', '', '', '', '', ''],
       ['', '', '', '', '', '', ''],
     ];
-  }
+  };
 
   static winningPositions(board: string[][]): number[][] | null {
     const winningPositions: number[][] = [];
@@ -37,6 +37,16 @@ class P4Utils {
     }
 
     return winningPositions;
+  }
+
+  static availableRowIn(board: string[][], column: number): number {
+    let lastIndex = -1;
+    board.forEach((value, index) => {
+      if (value[column] === '') {
+        lastIndex = index;
+      }
+    });
+    return lastIndex;
   }
 
   private static winpositionForColomns(board: string[][]): number[][] | null {
