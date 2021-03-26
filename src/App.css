@@ -8,6 +8,7 @@
   height: 34px;
   width: 34px;
   border-radius: 17px;
+  margin: 2px;
 }
 
 .square:focus {

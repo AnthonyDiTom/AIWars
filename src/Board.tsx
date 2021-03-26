@@ -128,15 +128,17 @@ function Board() {
     };
 
     return (
-      <button
+      <div
+        tabIndex={0}
         key={`${row}${column}`}
         style={styles}
-        type="button"
+        role="button"
         className="square"
         onClick={() => selectColumn(column)}
+        onKeyPress={() => selectColumn(column)}
       >
         {}
-      </button>
+      </div>
     );
   }
 
