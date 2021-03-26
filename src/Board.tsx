@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import './App.css';
 
 function Board() {
-  const [squares, setSquares] = useState(() => [
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-  ]);
+  function board(): string[][] {
+    return [
+      ['', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', ''],
+    ];
+  }
+
+  const [squares, setSquares] = useState(board());
 
   const [player, setPlayer] = useState('red');
   const [winner, setWinner] = useState<string | null>(null);
@@ -32,18 +36,21 @@ function Board() {
     setSquares(squaresCopy);
   }
 
-  function checkVictory(): string | null {
+  function checkVictory() {
     const wpc = winpositionForColomns();
-
     if (wpc !== null) {
       setVictory(player, wpc);
     }
+
     const wpr = winpositionForRows();
     if (wpr !== null) {
       setVictory(player, wpr);
     }
 
-    return null;
+    const wpo = winpositionForDiagonals();
+    if (wpo !== null) {
+      setVictory(player, wpo);
+    }
   }
 
   function winpositionForColomns(): number[][] | null {
@@ -78,6 +85,17 @@ function Board() {
     return null;
   }
 
+  function winpositionForDiagonals(): number[][] | null {
+    // let count = 0;
+    // let currentPlayer = '';
+
+    // let rowIndex = 0;
+    // let columnIndex = 0;
+
+    // let winningPositions = [];
+    return null;
+  }
+
   function winpositionForRows(): number[][] | null {
     let count = 0;
     let currentPlayer = '';
@@ -86,6 +104,7 @@ function Board() {
     let columnIndex = 0;
 
     let winningPositions = [];
+
     while (rowIndex < rowsNumber) {
       while (columnIndex < columsNumbers) {
         if (currentPlayer !== squares[rowIndex][columnIndex]) {
@@ -174,13 +193,27 @@ function Board() {
     return lastIndex;
   }
 
+  function restart() {
+    setWinner(null);
+    setSquares(board());
+  }
+
+  function WinnerComponent() {
+    return (
+      <>
+        <h6>
+          {winner} is the winner !{'  '}
+          <button type="button" onClick={() => restart()}>
+            Restart
+          </button>
+        </h6>
+      </>
+    );
+  }
+
   return (
     <div>
-      {winner === null ? (
-        <h6>player: {player}</h6>
-      ) : (
-        <h6>{winner} is the winner !</h6>
-      )}
+      {winner === null ? <h6>player: {player}</h6> : <WinnerComponent />}
 
       {squares.map((value, index) => {
         return renderRow(value, index);
