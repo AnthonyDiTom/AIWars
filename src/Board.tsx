@@ -21,39 +21,52 @@ function Board() {
     setPlayer(player === 'red' ? 'blue' : 'red');
   }
 
+  function setVictory(winnerName: string, positions: number[][]) {
+    setWinner(winnerName);
+    const squaresCopy = [...squares];
+
+    positions.forEach((value) => {
+      const [row, column] = value;
+      squaresCopy[row][column] = 'yellow';
+    });
+    setSquares(squaresCopy);
+  }
+
   function checkVictory(): string | null {
-    const wfc = winnerForColomns();
-    if (wfc !== null) {
-      setWinner(wfc);
-      return wfc;
+    const wpc = winpositionForColomns();
+
+    if (wpc !== null) {
+      setVictory(player, wpc);
     }
-    const wfr = winnerForRows();
-    if (wfr !== null) {
-      setWinner(wfr);
-      return wfr;
+    const wpr = winpositionForRows();
+    if (wpr !== null) {
+      setVictory(player, wpr);
     }
 
     return null;
   }
 
-  function winnerForColomns(): string | null {
+  function winpositionForColomns(): number[][] | null {
     let count = 0;
     let currentPlayer = '';
 
     let rowIndex = 0;
     let columnIndex = 0;
 
+    let winningPositions = [];
+
     while (columnIndex < columsNumbers) {
       while (rowIndex < rowsNumber) {
         if (currentPlayer !== squares[rowIndex][columnIndex]) {
           currentPlayer = squares[rowIndex][columnIndex];
+          winningPositions = [];
           count = 0;
         }
-
+        winningPositions.push([rowIndex, columnIndex]);
         count += 1;
 
         if (count === 4 && currentPlayer !== '') {
-          return currentPlayer;
+          return winningPositions;
         }
         rowIndex += 1;
       }
@@ -65,25 +78,34 @@ function Board() {
     return null;
   }
 
-  function winnerForRows(): string | null {
+  function winpositionForRows(): number[][] | null {
     let count = 0;
     let currentPlayer = '';
-    // eslint-disable-next-line no-restricted-syntax
-    for (const row of squares) {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const value of row) {
-        if (currentPlayer !== value) {
-          currentPlayer = value;
+
+    let rowIndex = 0;
+    let columnIndex = 0;
+
+    let winningPositions = [];
+    while (rowIndex < rowsNumber) {
+      while (columnIndex < columsNumbers) {
+        if (currentPlayer !== squares[rowIndex][columnIndex]) {
+          currentPlayer = squares[rowIndex][columnIndex];
+          winningPositions = [];
           count = 0;
         }
-        currentPlayer = value;
+        winningPositions.push([rowIndex, columnIndex]);
         count += 1;
-        if (count === 4 && value !== '') {
-          return value;
+
+        if (count === 4 && currentPlayer !== '') {
+          return winningPositions;
         }
+        columnIndex += 1;
       }
+      columnIndex = 0;
       count = 0;
+      rowIndex += 1;
     }
+
     return null;
   }
 
@@ -93,6 +115,8 @@ function Board() {
         return 'red';
       case 'blue':
         return 'blue';
+      case 'yellow':
+        return 'yellow';
       default:
         return 'white';
     }
