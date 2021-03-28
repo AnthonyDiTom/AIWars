@@ -33,6 +33,7 @@ class P4Utils {
     let currentPlayer = '';
     let winningPositions: number[][] = [];
     let potentialWiningPositions: number[][] = [];
+    let currentCheckWiningPosition: number[][] = [];
 
     // Horizontal
     for (let colIndex = 0; colIndex < P4Utils.columsNumbers; colIndex++) {
@@ -42,14 +43,16 @@ class P4Utils {
       }
       potentialWiningPositions.push([row, colIndex]);
 
-      if (potentialWiningPositions.length === 4 && currentPlayer !== '') {
-        winningPositions = [...potentialWiningPositions];
+      if (potentialWiningPositions.length > 3 && currentPlayer !== '') {
+        currentCheckWiningPosition = [...potentialWiningPositions];
       }
     }
+    winningPositions = [...currentCheckWiningPosition];
 
     // Vertical
     currentPlayer = '';
     potentialWiningPositions = [];
+    currentCheckWiningPosition = [];
 
     for (let rowIndex = 0; rowIndex < P4Utils.rowsNumber; rowIndex++) {
       if (currentPlayer !== board[rowIndex][column]) {
@@ -58,11 +61,17 @@ class P4Utils {
       }
       potentialWiningPositions.push([rowIndex, column]);
 
-      if (potentialWiningPositions.length === 4 && currentPlayer !== '') {
-        winningPositions = [...winningPositions, ...potentialWiningPositions];
+      if (potentialWiningPositions.length > 3 && currentPlayer !== '') {
+        currentCheckWiningPosition = [...potentialWiningPositions];
       }
     }
-    console.log(winningPositions);
+
+    // Diagonal
+    currentPlayer = '';
+    potentialWiningPositions = [];
+    currentCheckWiningPosition = [];
+
+    winningPositions = [...winningPositions, ...currentCheckWiningPosition];
 
     currentPlayer = '';
     potentialWiningPositions = [];
