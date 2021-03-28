@@ -3,7 +3,7 @@ import './App.css';
 import P4Utils from './Classes/P4Utils';
 
 function Board() {
-  const [board, setBoard] = useState(P4Utils.board);
+  const [board, setBoard] = useState(P4Utils.newBoard);
   const [player, setPlayer] = useState('red');
   const [winner, setWinner] = useState<string | null>(null);
 
@@ -18,13 +18,6 @@ function Board() {
       squaresCopy[row][column] = 'yellow';
     });
     setBoard(squaresCopy);
-  }
-
-  function checkVictory() {
-    const wpc = P4Utils.winningPositions(board);
-    if (wpc !== null) {
-      setVictory(player, wpc);
-    }
   }
 
   function color(id: string): string {
@@ -65,16 +58,22 @@ function Board() {
     if (row === -1 || winner != null) {
       return;
     }
+
     const squaresCopy = [...board];
     squaresCopy[row][column] = player;
     setBoard(squaresCopy);
-    checkVictory();
+
+    const WinPositions = P4Utils.resultForMove(row, column, board);
+    if (WinPositions !== null) {
+      setVictory(player, WinPositions);
+    }
+
     setNextPlayer();
   }
 
   function restart() {
     setWinner(null);
-    setBoard(P4Utils.board);
+    setBoard(P4Utils.newBoard);
   }
 
   function WinnerComponent() {
