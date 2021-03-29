@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import Board from './Board';
+import Puissance4 from './Puissance4';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Board />
+        <Puissance4 />
       </header>
     </div>
   );

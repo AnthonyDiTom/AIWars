@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import './App.css';
 import P4Utils from './Classes/P4Utils';
+import IAPlayer from './iaPlayers/IaPlayer';
 
-function Board() {
+function Puissance4() {
   const [board, setBoard] = useState(P4Utils.newBoard);
   const [player, setPlayer] = useState('red');
   const [winner, setWinner] = useState<string | null>(null);
-
+  const [isIAPlaying, setisIAPlaying] = useState(true);
   const setNextPlayer = () => setPlayer(player === 'red' ? 'blue' : 'red');
+
+  React.useEffect(() => {
+    if (player === 'blue' && isIAPlaying) {
+      selectColumn(IAPlayer.play(board));
+    }
+  });
 
   function setVictory(winnerName: string, positions: number[][]) {
     setWinner(winnerName);
@@ -104,4 +111,4 @@ function Board() {
   );
 }
 
-export default Board;
+export default Puissance4;

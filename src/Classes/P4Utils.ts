@@ -85,7 +85,6 @@ class P4Utils {
       colIndex < P4Utils.columsNumbers && rowIndex < P4Utils.rowsNumber;
       colIndex++, rowIndex++
     ) {
-      // console.log(`${minPossibleRow} : ${colIndex}`);
       if (currentPlayer !== board[rowIndex][colIndex]) {
         currentPlayer = board[rowIndex][colIndex];
         potentialWiningPositions = [];
@@ -115,7 +114,6 @@ class P4Utils {
       colIndex > -1 && rowIndex < this.rowsNumber;
       colIndex--, rowIndex++
     ) {
-      // console.log(`${minPossibleRow} : ${colIndex}`);
       if (currentPlayer !== board[rowIndex][colIndex]) {
         currentPlayer = board[rowIndex][colIndex];
         potentialWiningPositions = [];
