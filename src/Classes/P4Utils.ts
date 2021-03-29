@@ -65,17 +65,68 @@ class P4Utils {
         currentCheckWiningPosition = [...potentialWiningPositions];
       }
     }
+    winningPositions = [...winningPositions, ...currentCheckWiningPosition];
 
-    // Diagonal
+    // Diagonal L to R
     currentPlayer = '';
     potentialWiningPositions = [];
     currentCheckWiningPosition = [];
 
+    let startingColomn = column;
+    let startingRow = row;
+
+    while (startingColomn !== 0 && startingRow !== 0) {
+      startingRow -= 1;
+      startingColomn -= 1;
+    }
+
+    for (
+      let colIndex = startingColomn, rowIndex = startingRow;
+      colIndex < P4Utils.columsNumbers && rowIndex < P4Utils.rowsNumber;
+      colIndex++, rowIndex++
+    ) {
+      // console.log(`${minPossibleRow} : ${colIndex}`);
+      if (currentPlayer !== board[rowIndex][colIndex]) {
+        currentPlayer = board[rowIndex][colIndex];
+        potentialWiningPositions = [];
+      }
+      potentialWiningPositions.push([rowIndex, colIndex]);
+      if (potentialWiningPositions.length > 3 && currentPlayer !== '') {
+        currentCheckWiningPosition = [...potentialWiningPositions];
+      }
+    }
+
     winningPositions = [...winningPositions, ...currentCheckWiningPosition];
 
+    // Diagonal R to L
     currentPlayer = '';
     potentialWiningPositions = [];
+    currentCheckWiningPosition = [];
 
+    startingColomn = column;
+    startingRow = row;
+    while (startingColomn < this.columsNumbers && startingRow > 0) {
+      startingRow -= 1;
+      startingColomn += 1;
+    }
+
+    for (
+      let colIndex = startingColomn, rowIndex = startingRow;
+      colIndex > -1 && rowIndex < this.rowsNumber;
+      colIndex--, rowIndex++
+    ) {
+      // console.log(`${minPossibleRow} : ${colIndex}`);
+      if (currentPlayer !== board[rowIndex][colIndex]) {
+        currentPlayer = board[rowIndex][colIndex];
+        potentialWiningPositions = [];
+      }
+      potentialWiningPositions.push([rowIndex, colIndex]);
+      if (potentialWiningPositions.length > 3 && currentPlayer !== '') {
+        currentCheckWiningPosition = [...potentialWiningPositions];
+      }
+    }
+
+    winningPositions = [...winningPositions, ...currentCheckWiningPosition];
     return winningPositions.length === 0 ? null : winningPositions;
   }
 }
