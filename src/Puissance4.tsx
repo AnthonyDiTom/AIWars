@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import P4Utils from './Classes/P4Utils';
+import RoundButton from './Components/RoundButton';
 import IAPlayer from './iaPlayers/IaPlayer';
 
 function Puissance4() {
@@ -57,31 +58,22 @@ function Puissance4() {
     setBoard(P4Utils.newBoard);
   }
 
-  type RoundButtonProps = { row: number; column: number };
-  function RoundButton({ row, column }: RoundButtonProps) {
-    return (
-      <div
-        tabIndex={0}
-        key={`${row}${column}`}
-        style={{ backgroundColor: color(board[row][column]) }}
-        role="button"
-        className="square"
-        aria-label="square"
-        onClick={() => selectColumn(column)}
-        onKeyPress={() => selectColumn(column)}
-      />
-    );
-  }
-
   function Board() {
     return (
       <div>
         {board.map((row, rowIndex) => {
-          const key = `RI${rowIndex}`;
+          const rowKey = `RI${rowIndex}`;
           return (
-            <div className="board-row" key={`${key}`}>
-              {row.map((value, index) => {
-                return <RoundButton row={rowIndex} column={index} />;
+            <div className="board-row" key={`${rowKey}`}>
+              {row.map((value, colIndex) => {
+                const key = `R${rowIndex}C${colIndex}`;
+                return (
+                  <RoundButton
+                    key={key}
+                    color={color(board[rowIndex][colIndex])}
+                    onclick={() => selectColumn(colIndex)}
+                  />
+                );
               })}
             </div>
           );
