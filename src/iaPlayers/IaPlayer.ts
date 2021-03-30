@@ -23,7 +23,6 @@ class IAPlayer {
   }
 
   static checkAWinningPossibilityForIa(board: string[][]): number | null {
-    // eslint-disable-next-line no-plusplus
     for (let col = 0; col < P4Utils.columsNumbers; col++) {
       const availableRow = P4Utils.availableRowIn(board, col);
 

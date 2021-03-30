@@ -34,32 +34,6 @@ function Puissance4() {
     return 'white';
   }
 
-  function renderSquare(row: number, column: number) {
-    return (
-      <div
-        tabIndex={0}
-        key={`${row}${column}`}
-        style={{ backgroundColor: color(board[row][column]) }}
-        role="button"
-        className="square"
-        onClick={() => selectColumn(column)}
-        onKeyPress={() => selectColumn(column)}
-      >
-        {}
-      </div>
-    );
-  }
-
-  function renderRow(row: Array<string>, rowIndex: number) {
-    return (
-      <div className="board-row" key={`${rowIndex}`}>
-        {row.map((value, index) => {
-          return renderSquare(rowIndex, index);
-        })}
-      </div>
-    );
-  }
-
   function selectColumn(column: number) {
     const row = P4Utils.availableRowIn(board, column);
     if (row === -1 || winner != null) {
@@ -83,7 +57,40 @@ function Puissance4() {
     setBoard(P4Utils.newBoard);
   }
 
-  function WinnerComponent() {
+  type RoundButtonProps = { row: number; column: number };
+  function RoundButton({ row, column }: RoundButtonProps) {
+    return (
+      <div
+        tabIndex={0}
+        key={`${row}${column}`}
+        style={{ backgroundColor: color(board[row][column]) }}
+        role="button"
+        className="square"
+        aria-label="square"
+        onClick={() => selectColumn(column)}
+        onKeyPress={() => selectColumn(column)}
+      />
+    );
+  }
+
+  function Board() {
+    return (
+      <div>
+        {board.map((row, rowIndex) => {
+          const key = `RI${rowIndex}`;
+          return (
+            <div className="board-row" key={`${key}`}>
+              {row.map((value, index) => {
+                return <RoundButton row={rowIndex} column={index} />;
+              })}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  function Winner() {
     return (
       <>
         <h6>
@@ -102,11 +109,19 @@ function Puissance4() {
 
   return (
     <div>
-      {winner === null ? <h3>{player}</h3> : <WinnerComponent />}
+      {winner === null ? <h3>{player}</h3> : <Winner />}
 
-      {board.map((value, index) => {
-        return renderRow(value, index);
-      })}
+      <Board />
+
+      <h5 style={{ margin: '30px' }}>
+        Play with AI :
+        <input
+          name="isGoing"
+          type="checkbox"
+          checked={isIAPlaying}
+          onChange={() => setisIAPlaying(!isIAPlaying)}
+        />
+      </h5>
     </div>
   );
 }
