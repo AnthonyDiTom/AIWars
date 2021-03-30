@@ -6,24 +6,23 @@ import RoundButton from './RoundButton';
 import IAPlayer from '../Classes/IaPlayer';
 
 function Puissance4() {
-  enum RoundColor {
+  enum CircleColor {
     playerRed = 'red',
     playerBlue = 'blue',
     victory = 'yellow',
     empty = 'white',
   }
 
-  const { playerRed } = RoundColor;
-  const { playerBlue } = RoundColor;
+  const { playerRed } = CircleColor;
+  const { playerBlue } = CircleColor;
 
   const [board, setBoard] = useState(P4.newBoard);
   const [player, setPlayer] = useState(playerRed);
   const [winner, setWinner] = useState<string | null>(null);
   const [isPlayingWithAI, setIsPlayingWithAI] = useState(false);
 
-  const caseColor = (id: string): string => (id === '' ? RoundColor.empty : id);
-  const setNextPlayer = () =>
-    setPlayer(player === playerRed ? playerBlue : playerRed);
+  const caseColor = (id: string): string => (id === '' ? CircleColor.empty : id);
+  const setNextPlayer = () => setPlayer(player === playerRed ? playerBlue : playerRed);
 
   React.useEffect(() => {
     if (player === playerBlue && isPlayingWithAI) {
@@ -37,7 +36,7 @@ function Puissance4() {
 
     positions.forEach((value) => {
       const [row, column] = value;
-      boardCopy[row][column] = RoundColor.victory;
+      boardCopy[row][column] = CircleColor.victory;
     });
     setBoard(boardCopy);
   }
@@ -97,7 +96,9 @@ function Puissance4() {
           {winner} wins !
           <button
             type="button"
-            style={{ marginLeft: '8px' }}
+            style={{
+              marginLeft: '8px',
+            }}
             onClick={() => restart()}
           >
             Restart
@@ -109,7 +110,12 @@ function Puissance4() {
 
   function AICheckbox() {
     return (
-      <div style={{ border: 'white', borderWidth: '1px' }}>
+      <div
+        style={{
+          border: 'white',
+          borderWidth: '1px',
+        }}
+      >
         <input
           name="isGoing"
           type="checkbox"

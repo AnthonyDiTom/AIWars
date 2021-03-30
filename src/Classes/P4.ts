@@ -21,11 +21,7 @@ class P4 {
     return lastIndex;
   }
 
-  static resultForMove(
-    row: number,
-    column: number,
-    board: string[][],
-  ): number[][] | null {
+  static resultForMove(row: number, column: number, board: string[][]): number[][] | null {
     let currentPlayer = '';
     let winningPositions: number[][] = [];
     let potentialWiningPositions: number[][] = [];

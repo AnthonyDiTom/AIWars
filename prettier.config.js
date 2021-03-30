@@ -4,4 +4,5 @@ module.exports = {
   allowParens: 'avoid',
   semi: true,
   tabWidth: 2,
+  printWidth: 100,
 };

@@ -2,21 +2,13 @@ import _ from 'lodash';
 import P4 from './P4';
 
 class IAPlayer {
-  static randomColumn = () =>
-    Math.floor(Math.random() * Math.floor(P4.columsNumbers - 1));
+  static randomColumn = () => Math.floor(Math.random() * Math.floor(P4.columsNumbers - 1));
 
-  static playColumn(
-    board: string[][],
-    aiPlayer: string,
-    otherPlayer: string,
-  ): number {
+  static playColumn(board: string[][], aiPlayer: string, otherPlayer: string): number {
     let column = -1;
     let randomPlay = 0;
 
-    const winingPossibility = IAPlayer.checkAWinningPossibilityFor(
-      aiPlayer,
-      board,
-    );
+    const winingPossibility = IAPlayer.checkAWinningPossibilityFor(aiPlayer, board);
 
     if (winingPossibility !== null) {
       return winingPossibility;
@@ -58,10 +50,7 @@ class IAPlayer {
   //   return null;
   // }
 
-  static checkAWinningPossibilityFor(
-    player: string,
-    board: string[][],
-  ): number | null {
+  static checkAWinningPossibilityFor(player: string, board: string[][]): number | null {
     for (let col = 0; col < P4.columsNumbers; col++) {
       const availableRow = P4.availableRowIn(board, col);
 
