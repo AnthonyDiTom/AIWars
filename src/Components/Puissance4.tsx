@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import './App.css';
-import P4Utils from './Classes/P4Utils';
-import RoundButton from './Components/RoundButton';
-import IAPlayer from './iaPlayers/IaPlayer';
+import '../App.css';
+import P4Utils from '../Classes/P4Utils';
+import RoundButton from './RoundButton';
+import IAPlayer from '../Classes/IaPlayer';
 
 function Puissance4() {
   const [board, setBoard] = useState(P4Utils.newBoard);
   const [player, setPlayer] = useState('red');
   const [winner, setWinner] = useState<string | null>(null);
-  const [isIAPlaying, setisIAPlaying] = useState(true);
+  const [isIAPlaying, setisIAPlaying] = useState(false);
   const setNextPlayer = () => setPlayer(player === 'red' ? 'blue' : 'red');
 
   React.useEffect(() => {
@@ -99,13 +99,9 @@ function Puissance4() {
     );
   }
 
-  return (
-    <div>
-      {winner === null ? <h3>{player}</h3> : <Winner />}
-
-      <Board />
-
-      <h5 style={{ margin: '30px' }}>
+  function AICheckbox() {
+    return (
+      <h5>
         Play with AI :
         <input
           name="isGoing"
@@ -114,6 +110,14 @@ function Puissance4() {
           onChange={() => setisIAPlaying(!isIAPlaying)}
         />
       </h5>
+    );
+  }
+
+  return (
+    <div>
+      {winner === null ? <h3>{player}</h3> : <Winner />}
+      <Board />
+      <AICheckbox />
     </div>
   );
 }

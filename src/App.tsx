@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Puissance4 from './Puissance4';
+import Puissance4 from './Components/Puissance4';
 
 function App() {
   return (

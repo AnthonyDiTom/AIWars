@@ -1,4 +1,4 @@
-import P4Utils from '../Classes/P4Utils';
+import P4Utils from './P4Utils';
 
 class IAPlayer {
   static getRandomInt(): number {
