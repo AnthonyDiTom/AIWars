@@ -20,6 +20,8 @@
   "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
     "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "prettier/prettier": "error",

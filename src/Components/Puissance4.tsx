@@ -6,8 +6,15 @@ import RoundButton from './RoundButton';
 import IAPlayer from '../Classes/IaPlayer';
 
 function Puissance4() {
-  const playerRed = 'red';
-  const playerBlue = 'blue';
+  enum RoundColor {
+    playerRed = 'red',
+    playerBlue = 'blue',
+    victory = 'yellow',
+    empty = 'white',
+  }
+
+  const { playerRed } = RoundColor;
+  const { playerBlue } = RoundColor;
 
   const [board, setBoard] = useState(P4.newBoard);
   const [player, setPlayer] = useState(playerRed);
@@ -28,7 +35,7 @@ function Puissance4() {
 
     positions.forEach((value) => {
       const [row, column] = value;
-      boardCopy[row][column] = 'yellow';
+      boardCopy[row][column] = RoundColor.victory;
     });
     setBoard(boardCopy);
   }
@@ -37,7 +44,7 @@ function Puissance4() {
     if (id !== '') {
       return id;
     }
-    return 'white';
+    return RoundColor.empty;
   }
 
   function selectColumn(column: number) {
