@@ -5,7 +5,7 @@ class IAPlayer {
     return Math.floor(Math.random() * Math.floor(6));
   }
 
-  static play(board: string[][]): number {
+  static playColumn(board: string[][]): number {
     let column = -1;
     let randomPlay = 0;
 
@@ -27,12 +27,12 @@ class IAPlayer {
       const availableRow = P4Utils.availableRowIn(board, col);
 
       if (availableRow !== -1) {
-        const newBoard = [...board];
-        newBoard[availableRow][col] = 'blue';
+        const boardCopy = [...board];
+        boardCopy[availableRow][col] = 'blue';
         const winningPositions = P4Utils.resultForMove(
           availableRow,
           col,
-          newBoard,
+          boardCopy,
         );
         if (winningPositions != null) {
           return col;

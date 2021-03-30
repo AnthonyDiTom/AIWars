@@ -13,19 +13,19 @@ function Puissance4() {
 
   React.useEffect(() => {
     if (player === 'blue' && isIAPlaying) {
-      selectColumn(IAPlayer.play(board));
+      selectColumn(IAPlayer.playColumn(board));
     }
   });
 
   function setVictory(winnerName: string, positions: number[][]) {
     setWinner(winnerName);
-    const squaresCopy = [...board];
+    const boardCopy = [...board];
 
     positions.forEach((value) => {
       const [row, column] = value;
-      squaresCopy[row][column] = 'yellow';
+      boardCopy[row][column] = 'yellow';
     });
-    setBoard(squaresCopy);
+    setBoard(boardCopy);
   }
 
   function color(id: string): string {
@@ -102,13 +102,13 @@ function Puissance4() {
   function AICheckbox() {
     return (
       <h5>
-        Play with AI :
         <input
           name="isGoing"
           type="checkbox"
           checked={isIAPlaying}
           onChange={() => setisIAPlaying(!isIAPlaying)}
         />
+        Play with AI
       </h5>
     );
   }
