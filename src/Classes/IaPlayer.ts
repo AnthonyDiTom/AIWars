@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import P4Utils from './P4Utils';
 
 class IAPlayer {
@@ -27,7 +28,7 @@ class IAPlayer {
       const availableRow = P4Utils.availableRowIn(board, col);
 
       if (availableRow !== -1) {
-        const boardCopy = [...board];
+        const boardCopy = _.cloneDeep(board);
         boardCopy[availableRow][col] = 'blue';
         const winningPositions = P4Utils.resultForMove(
           availableRow,

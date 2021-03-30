@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import _ from 'lodash';
 import '../App.css';
 import P4Utils from '../Classes/P4Utils';
 import RoundButton from './RoundButton';
@@ -19,7 +20,7 @@ function Puissance4() {
 
   function setVictory(winnerName: string, positions: number[][]) {
     setWinner(winnerName);
-    const boardCopy = [...board];
+    const boardCopy = _.cloneDeep(board);
 
     positions.forEach((value) => {
       const [row, column] = value;
@@ -100,8 +101,12 @@ function Puissance4() {
   }
 
   function AICheckbox() {
+    // const style {
+    //   bor
+    // }
+
     return (
-      <h5>
+      <div style={{ border: 'white', borderWidth: '1px' }}>
         <input
           name="isGoing"
           type="checkbox"
@@ -109,7 +114,7 @@ function Puissance4() {
           onChange={() => setisIAPlaying(!isIAPlaying)}
         />
         Play with AI
-      </h5>
+      </div>
     );
   }
 
