@@ -20,6 +20,8 @@ function Puissance4() {
   const [player, setPlayer] = useState(playerRed);
   const [winner, setWinner] = useState<string | null>(null);
   const [isPlayingWithAI, setIsPlayingWithAI] = useState(false);
+
+  const caseColor = (id: string): string => (id === '' ? RoundColor.empty : id);
   const setNextPlayer = () =>
     setPlayer(player === playerRed ? playerBlue : playerRed);
 
@@ -38,13 +40,6 @@ function Puissance4() {
       boardCopy[row][column] = RoundColor.victory;
     });
     setBoard(boardCopy);
-  }
-
-  function color(id: string): string {
-    if (id !== '') {
-      return id;
-    }
-    return RoundColor.empty;
   }
 
   function selectColumn(column: number) {
@@ -83,7 +78,7 @@ function Puissance4() {
                 return (
                   <RoundButton
                     key={key}
-                    color={color(board[rowIndex][colIndex])}
+                    color={caseColor(board[rowIndex][colIndex])}
                     onclick={() => selectColumn(colIndex)}
                   />
                 );

@@ -2,9 +2,8 @@ import _ from 'lodash';
 import P4 from './P4';
 
 class IAPlayer {
-  static getRandomInt(): number {
-    return Math.floor(Math.random() * Math.floor(6));
-  }
+  static randomColumn = () =>
+    Math.floor(Math.random() * Math.floor(P4.columsNumbers - 1));
 
   static playColumn(
     board: string[][],
@@ -37,7 +36,7 @@ class IAPlayer {
     }
 
     while (column === -1) {
-      randomPlay = IAPlayer.getRandomInt();
+      randomPlay = IAPlayer.randomColumn();
       column = P4.availableRowIn(board, randomPlay);
     }
 
