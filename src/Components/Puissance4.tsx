@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import '../App.css';
-import P4Utils from '../Classes/P4Utils';
+import P4 from '../Classes/P4';
 import RoundButton from './RoundButton';
 import IAPlayer from '../Classes/IaPlayer';
 
 function Puissance4() {
-  const [board, setBoard] = useState(P4Utils.newBoard);
-  const [player, setPlayer] = useState('red');
+  const playerRed = 'red';
+  const playerBlue = 'blue';
+
+  const [board, setBoard] = useState(P4.newBoard);
+  const [player, setPlayer] = useState(playerRed);
   const [winner, setWinner] = useState<string | null>(null);
-  const [isIAPlaying, setisIAPlaying] = useState(false);
-  const setNextPlayer = () => setPlayer(player === 'red' ? 'blue' : 'red');
+  const [isPlayingWithAI, setIsPlayingWithAI] = useState(false);
+  const setNextPlayer = () =>
+    setPlayer(player === playerRed ? playerBlue : playerRed);
 
   React.useEffect(() => {
-    if (player === 'blue' && isIAPlaying) {
-      selectColumn(IAPlayer.playColumn(board));
+    if (player === playerBlue && isPlayingWithAI) {
+      selectColumn(IAPlayer.playColumn(board, playerBlue, playerRed));
     }
   });
 
@@ -37,26 +41,27 @@ function Puissance4() {
   }
 
   function selectColumn(column: number) {
-    const row = P4Utils.availableRowIn(board, column);
+    const row = P4.availableRowIn(board, column);
     if (row === -1 || winner != null) {
       return;
     }
 
-    const squaresCopy = [...board];
+    const squaresCopy = [...board]; // Side effect, ask to peter
     squaresCopy[row][column] = player;
     setBoard(squaresCopy);
 
-    const WinPositions = P4Utils.resultForMove(row, column, board);
+    const WinPositions = P4.resultForMove(row, column, board);
     if (WinPositions !== null) {
       setVictory(player, WinPositions);
     }
 
     setNextPlayer();
+    // Side effect for ia, ask to peter
   }
 
   function restart() {
     setWinner(null);
-    setBoard(P4Utils.newBoard);
+    setBoard(P4.newBoard);
   }
 
   function Board() {
@@ -101,17 +106,13 @@ function Puissance4() {
   }
 
   function AICheckbox() {
-    // const style {
-    //   bor
-    // }
-
     return (
       <div style={{ border: 'white', borderWidth: '1px' }}>
         <input
           name="isGoing"
           type="checkbox"
-          checked={isIAPlaying}
-          onChange={() => setisIAPlaying(!isIAPlaying)}
+          checked={isPlayingWithAI}
+          onChange={() => setIsPlayingWithAI(!isPlayingWithAI)}
         />
         Play with AI
       </div>

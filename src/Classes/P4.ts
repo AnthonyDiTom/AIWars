@@ -1,18 +1,14 @@
-/* eslint-disable no-plusplus */
-class P4Utils {
+class P4 {
   static columsNumbers = 7;
 
   static rowsNumber = 6;
 
   static newBoard = (): string[][] => {
-    return [
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-    ];
+    const array: string[][] = [];
+    for (let index = 0; index < P4.rowsNumber; index++) {
+      array.push(Array(P4.columsNumbers).fill(''));
+    }
+    return array;
   };
 
   static availableRowIn(board: string[][], column: number): number {
@@ -36,7 +32,7 @@ class P4Utils {
     let currentCheckWiningPosition: number[][] = [];
 
     // Horizontal
-    for (let colIndex = 0; colIndex < P4Utils.columsNumbers; colIndex++) {
+    for (let colIndex = 0; colIndex < P4.columsNumbers; colIndex++) {
       if (currentPlayer !== board[row][colIndex]) {
         currentPlayer = board[row][colIndex];
         potentialWiningPositions = [];
@@ -54,7 +50,7 @@ class P4Utils {
     potentialWiningPositions = [];
     currentCheckWiningPosition = [];
 
-    for (let rowIndex = 0; rowIndex < P4Utils.rowsNumber; rowIndex++) {
+    for (let rowIndex = 0; rowIndex < P4.rowsNumber; rowIndex++) {
       if (currentPlayer !== board[rowIndex][column]) {
         currentPlayer = board[rowIndex][column];
         potentialWiningPositions = [];
@@ -82,7 +78,7 @@ class P4Utils {
 
     for (
       let colIndex = startingColomn, rowIndex = startingRow;
-      colIndex < P4Utils.columsNumbers && rowIndex < P4Utils.rowsNumber;
+      colIndex < P4.columsNumbers && rowIndex < P4.rowsNumber;
       colIndex++, rowIndex++
     ) {
       if (currentPlayer !== board[rowIndex][colIndex]) {
@@ -129,4 +125,4 @@ class P4Utils {
   }
 }
 
-export default P4Utils;
+export default P4;
