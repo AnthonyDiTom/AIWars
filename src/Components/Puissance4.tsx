@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import '../App.css';
 import P4 from '../Classes/P4';
-import RoundButton from './RoundButton';
+import CircleButton from './CircleButton';
 import IAPlayer from '../Classes/IaPlayer';
 
 function Puissance4() {
@@ -13,8 +13,7 @@ function Puissance4() {
     empty = 'white',
   }
 
-  const { playerRed } = CircleColor;
-  const { playerBlue } = CircleColor;
+  const { playerRed, playerBlue } = CircleColor;
 
   const [board, setBoard] = useState(P4.newBoard);
   const [player, setPlayer] = useState(playerRed);
@@ -28,7 +27,8 @@ function Puissance4() {
     if (player === playerBlue && isPlayingWithAI) {
       selectColumn(IAPlayer.playColumn(board, playerBlue, playerRed));
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [player, isPlayingWithAI]);
 
   function setVictory(winnerName: string, positions: number[][]) {
     setWinner(winnerName);
@@ -51,9 +51,9 @@ function Puissance4() {
     squaresCopy[row][column] = player;
     setBoard(squaresCopy);
 
-    const WinPositions = P4.resultForMove(row, column, board);
-    if (WinPositions !== null) {
-      setVictory(player, WinPositions);
+    const winPositions = P4.resultForMove(row, column, board);
+    if (winPositions !== null) {
+      setVictory(player, winPositions);
     }
 
     setNextPlayer();
@@ -75,7 +75,7 @@ function Puissance4() {
               {row.map((value, colIndex) => {
                 const key = `R${rowIndex}C${colIndex}`;
                 return (
-                  <RoundButton
+                  <CircleButton
                     key={key}
                     color={caseColor(board[rowIndex][colIndex])}
                     onclick={() => selectColumn(colIndex)}

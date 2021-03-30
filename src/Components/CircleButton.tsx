@@ -6,7 +6,7 @@ type RoundButtonProps = {
   onclick: () => void;
 };
 
-function RoundButton({ color, onclick }: RoundButtonProps) {
+function CircleButton({ color, onclick }: RoundButtonProps) {
   return (
     <div
       tabIndex={0}
@@ -20,4 +20,4 @@ function RoundButton({ color, onclick }: RoundButtonProps) {
   );
 }
 
-export default RoundButton;
+export default CircleButton;
