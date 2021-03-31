@@ -67,7 +67,7 @@ function Puissance4() {
 
   function Board() {
     return (
-      <div>
+      <div className="p4Board" style={{ borderColor: player }}>
         {board.map((row, rowIndex) => {
           const rowKey = `RI${rowIndex}`;
           return (
@@ -110,13 +110,13 @@ function Puissance4() {
 
   function AICheckbox() {
     return (
-      <div
-        style={{
-          border: 'white',
-          borderWidth: '1px',
-        }}
-      >
+      <div className="checkBox">
         <input
+          style={{
+            height: '15px',
+            width: '15px',
+            marginRight: '8px',
+          }}
           name="isGoing"
           type="checkbox"
           checked={isPlayingWithAI}
@@ -129,7 +129,7 @@ function Puissance4() {
 
   return (
     <div>
-      {winner === null ? <h3>{player}</h3> : <Winner />}
+      {winner === null ? <h3>{player} plays</h3> : <Winner />}
       <Board />
       <AICheckbox />
     </div>
