@@ -23,9 +23,9 @@ class IAPlayer {
       return winingPossibilityForOtherPlayer;
     }
 
-    if (this.mustControlTheCenter(board)) {
-      return 3;
-    }
+    // if (this.mustControlTheCenter(board)) {
+    //   return 3;
+    // }
 
     while (column === -1) {
       randomPlay = IAPlayer.randomColumn();

@@ -4,6 +4,7 @@ import '../App.css';
 import P4 from '../Classes/P4';
 import CircleButton from './CircleButton';
 import IAPlayer from '../Classes/IaPlayer';
+import CheckBox from './CheckBox';
 
 function Puissance4() {
   enum CircleColor {
@@ -57,7 +58,7 @@ function Puissance4() {
     }
 
     setNextPlayer();
-    // Side effect for ia, ask to peter
+    // Side effect for ia, ask to peter (see use effect)
   }
 
   function restart() {
@@ -67,7 +68,10 @@ function Puissance4() {
 
   function Board() {
     return (
-      <div className="p4Board" style={{ borderColor: player }}>
+      <div
+        className="p4Board"
+        style={{ borderColor: winner === null ? player : CircleColor.victory }}
+      >
         {board.map((row, rowIndex) => {
           const rowKey = `RI${rowIndex}`;
           return (
@@ -93,7 +97,7 @@ function Puissance4() {
     return (
       <>
         <h6>
-          {winner} wins !
+          {isPlayingWithAI && winner === playerBlue ? 'AI' : winner} wins !
           <button
             type="button"
             style={{
@@ -108,30 +112,15 @@ function Puissance4() {
     );
   }
 
-  function AICheckbox() {
-    return (
-      <div className="checkBox">
-        <input
-          style={{
-            height: '15px',
-            width: '15px',
-            marginRight: '8px',
-          }}
-          name="isGoing"
-          type="checkbox"
-          checked={isPlayingWithAI}
-          onChange={() => setIsPlayingWithAI(!isPlayingWithAI)}
-        />
-        Play with AI
-      </div>
-    );
-  }
-
   return (
     <div>
       {winner === null ? <h3>{player} plays</h3> : <Winner />}
       <Board />
-      <AICheckbox />
+      <CheckBox
+        label="Play with AI"
+        isChecked={isPlayingWithAI}
+        onChange={() => setIsPlayingWithAI(!isPlayingWithAI)}
+      />
     </div>
   );
 }
