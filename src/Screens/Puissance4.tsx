@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import _ from 'lodash';
 import '../App.css';
 import P4 from '../Classes/P4';
-import CircleButton from './CircleButton';
 import IAPlayer from '../Classes/IaPlayer';
-import CheckBox from './CheckBox';
+import CheckBox from '../Components/CheckBox';
+import P4Board from '../Components/P4Board';
 
 function Puissance4() {
   enum CircleColor {
@@ -21,7 +21,6 @@ function Puissance4() {
   const [winner, setWinner] = useState<string | null>(null);
   const [isPlayingWithAI, setIsPlayingWithAI] = useState(false);
 
-  const caseColor = (id: string): string => (id === '' ? CircleColor.empty : id);
   const setNextPlayer = () => setPlayer(player === playerRed ? playerBlue : playerRed);
 
   React.useEffect(() => {
@@ -53,7 +52,7 @@ function Puissance4() {
       return;
     }
 
-    const squaresCopy = [...board]; // Side effect, ask to peter
+    const squaresCopy = [...board];
     squaresCopy[row][column] = player;
     setBoard(squaresCopy);
 
@@ -63,35 +62,6 @@ function Puissance4() {
     }
 
     setNextPlayer();
-    // Side effect for ia, ask to peter (see use effect)
-    // I can't use seclectcolumn again with ia
-  }
-
-  function Board() {
-    return (
-      <div
-        className="p4Board"
-        style={{ borderColor: winner === null ? player : CircleColor.victory }}
-      >
-        {board.map((row, rowIndex) => {
-          const rowKey = `RI${rowIndex}`;
-          return (
-            <div className="board-row" key={`${rowKey}`}>
-              {row.map((value, colIndex) => {
-                const key = `R${rowIndex}C${colIndex}`;
-                return (
-                  <CircleButton
-                    key={key}
-                    color={caseColor(board[rowIndex][colIndex])}
-                    onclick={() => selectColumn(colIndex)}
-                  />
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-    );
   }
 
   function Winner() {
@@ -116,7 +86,11 @@ function Puissance4() {
   return (
     <div>
       {winner === null ? `${player.toUpperCase()} plays` : <Winner />}
-      <Board />
+      <P4Board
+        board={board}
+        borderColor={winner === null ? player : CircleColor.victory}
+        selectColumn={selectColumn}
+      />
       <CheckBox
         label="Play with AI"
         isChecked={isPlayingWithAI}

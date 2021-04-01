@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 // import Puissance4 from './Components/Puissance4';
-import Puissance4Reducer from './Components/Puissance4Reducer';
+import Puissance4Reducer from './Screens/Puissance4Reducer';
 
 function App() {
   return (

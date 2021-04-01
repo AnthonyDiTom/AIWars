@@ -2,9 +2,9 @@ import React, { useReducer } from 'react';
 import _ from 'lodash';
 import '../App.css';
 import P4 from '../Classes/P4';
-import CircleButton from './CircleButton';
 import IAPlayer from '../Classes/IaPlayer';
-import CheckBox from './CheckBox';
+import CheckBox from '../Components/CheckBox';
+import P4Board from '../Components/P4Board';
 
 interface State {
   board: string[][];
@@ -34,7 +34,6 @@ function Puissance4Reducer() {
   });
 
   const { playerRed, playerBlue } = CircleColor;
-
   const nextPlayer = (game: State): string => (game.player === playerRed ? playerBlue : playerRed);
 
   const play = (game: State, row: number, column: number): State => {
@@ -80,9 +79,7 @@ function Puissance4Reducer() {
   };
 
   const [state, dispatch] = useReducer(reducer, initialSate());
-
-  const caseColor = (id: string): string => (id === '' ? CircleColor.empty : id);
-
+  // const { board, isPlayingWithAI, player, winner } = state;
   function restart() {
     dispatch({ type: 'restart' });
   }
@@ -103,32 +100,32 @@ function Puissance4Reducer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
-  function Board() {
-    return (
-      <div
-        className="p4Board"
-        style={{ borderColor: state.winner === null ? state.player : CircleColor.victory }}
-      >
-        {state.board.map((row, rowIndex) => {
-          const rowKey = `RI${rowIndex}`;
-          return (
-            <div className="board-row" key={`${rowKey}`}>
-              {row.map((value, colIndex) => {
-                const key = `R${rowIndex}C${colIndex}`;
-                return (
-                  <CircleButton
-                    key={key}
-                    color={caseColor(state.board[rowIndex][colIndex])}
-                    onclick={() => selectColumn(colIndex)}
-                  />
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
+  // function Board() {
+  //   return (
+  //     <div
+  //       className="p4Board"
+  //       style={{ borderColor: state.winner === null ? state.player : CircleColor.victory }}
+  //     >
+  //       {state.board.map((row, rowIndex) => {
+  //         const rowKey = `RI${rowIndex}`;
+  //         return (
+  //           <div className="board-row" key={`${rowKey}`}>
+  //             {row.map((value, colIndex) => {
+  //               const key = `R${rowIndex}C${colIndex}`;
+  //               return (
+  //                 <CircleButton
+  //                   key={key}
+  //                   color={caseColor(state.board[rowIndex][colIndex])}
+  //                   onclick={() => selectColumn(colIndex)}
+  //                 />
+  //               );
+  //             })}
+  //           </div>
+  //         );
+  //       })}
+  //     </div>
+  //   );
+  // }
 
   function Winner() {
     return (
@@ -152,7 +149,11 @@ function Puissance4Reducer() {
   return (
     <div>
       {state.winner === null ? `${state.player.toUpperCase()} plays` : <Winner />}
-      <Board />
+      <P4Board
+        board={state.board}
+        borderColor={state.winner === null ? state.player : CircleColor.victory}
+        selectColumn={selectColumn}
+      />
       <CheckBox
         label="Play with AI"
         isChecked={state.isPlayingWithAI}
