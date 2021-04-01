@@ -30,7 +30,7 @@ function Puissance4Reducer() {
     board: P4.newBoard(),
     player: CircleColor.playerRed,
     winner: null,
-    isPlayingWithAI: false,
+    isPlayingWithAI: true,
   });
 
   const { playerRed, playerBlue } = CircleColor;
@@ -79,13 +79,15 @@ function Puissance4Reducer() {
   };
 
   const [state, dispatch] = useReducer(reducer, initialSate());
-  // const { board, isPlayingWithAI, player, winner } = state;
+  // eslint-disable-next-line object-curly-newline
+  const { board, isPlayingWithAI, player, winner } = state;
+
   function restart() {
     dispatch({ type: 'restart' });
   }
 
   function selectColumn(column: number) {
-    const row = P4.availableRowIn(state.board, column);
+    const row = P4.availableRowIn(board, column);
     if (row === -1 || state.winner != null) {
       return;
     }
@@ -94,44 +96,17 @@ function Puissance4Reducer() {
   }
 
   React.useEffect(() => {
-    if (state.player === playerBlue && state.isPlayingWithAI) {
-      selectColumn(IAPlayer.playColumn(state.board, playerBlue, playerRed));
+    if (state.player === playerBlue && isPlayingWithAI) {
+      selectColumn(IAPlayer.playColumn(board, playerBlue, playerRed));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
-
-  // function Board() {
-  //   return (
-  //     <div
-  //       className="p4Board"
-  //       style={{ borderColor: state.winner === null ? state.player : CircleColor.victory }}
-  //     >
-  //       {state.board.map((row, rowIndex) => {
-  //         const rowKey = `RI${rowIndex}`;
-  //         return (
-  //           <div className="board-row" key={`${rowKey}`}>
-  //             {row.map((value, colIndex) => {
-  //               const key = `R${rowIndex}C${colIndex}`;
-  //               return (
-  //                 <CircleButton
-  //                   key={key}
-  //                   color={caseColor(state.board[rowIndex][colIndex])}
-  //                   onclick={() => selectColumn(colIndex)}
-  //                 />
-  //               );
-  //             })}
-  //           </div>
-  //         );
-  //       })}
-  //     </div>
-  //   );
-  // }
 
   function Winner() {
     return (
       <>
         <div>
-          {state.isPlayingWithAI && state.winner === playerBlue ? 'AI' : state.winner} wins !
+          {isPlayingWithAI && winner === playerBlue ? 'AI' : winner} wins !
           <button
             type="button"
             style={{
@@ -148,15 +123,15 @@ function Puissance4Reducer() {
 
   return (
     <div>
-      {state.winner === null ? `${state.player.toUpperCase()} plays` : <Winner />}
+      {winner === null ? `${player.toUpperCase()} plays` : <Winner />}
       <P4Board
-        board={state.board}
-        borderColor={state.winner === null ? state.player : CircleColor.victory}
+        board={board}
+        borderColor={winner === null ? player : CircleColor.victory}
         selectColumn={selectColumn}
       />
       <CheckBox
         label="Play with AI"
-        isChecked={state.isPlayingWithAI}
+        isChecked={isPlayingWithAI}
         onChange={() => dispatch({ type: 'switch-ia-enabled' })}
       />
     </div>
