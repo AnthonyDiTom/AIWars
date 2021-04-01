@@ -42,6 +42,11 @@ function Puissance4() {
     setBoard(boardCopy);
   }
 
+  function restart() {
+    setWinner(null);
+    setBoard(P4.newBoard);
+  }
+
   function selectColumn(column: number) {
     const row = P4.availableRowIn(board, column);
     if (row === -1 || winner != null) {
@@ -59,11 +64,7 @@ function Puissance4() {
 
     setNextPlayer();
     // Side effect for ia, ask to peter (see use effect)
-  }
-
-  function restart() {
-    setWinner(null);
-    setBoard(P4.newBoard);
+    // I can't use seclectcolumn again with ia
   }
 
   function Board() {
@@ -96,7 +97,7 @@ function Puissance4() {
   function Winner() {
     return (
       <>
-        <h6>
+        <div>
           {isPlayingWithAI && winner === playerBlue ? 'AI' : winner} wins !
           <button
             type="button"
@@ -107,14 +108,14 @@ function Puissance4() {
           >
             Restart
           </button>
-        </h6>
+        </div>
       </>
     );
   }
 
   return (
     <div>
-      {winner === null ? <h3>{player} plays</h3> : <Winner />}
+      {winner === null ? `${player.toUpperCase()} plays` : <Winner />}
       <Board />
       <CheckBox
         label="Play with AI"
