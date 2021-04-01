@@ -5,6 +5,7 @@ import P4 from '../Classes/P4';
 import IAPlayer from '../Classes/IaPlayer';
 import CheckBox from '../Components/CheckBox';
 import P4Board from '../Components/P4Board';
+import Winner from '../Components/Winner';
 
 interface State {
   board: string[][];
@@ -88,42 +89,26 @@ function Puissance4Reducer() {
 
   function selectColumn(column: number) {
     const row = P4.availableRowIn(board, column);
-    if (row === -1 || state.winner != null) {
+    if (row === -1 || winner != null) {
       return;
     }
-
     dispatch({ type: 'play', row, column });
   }
 
   React.useEffect(() => {
-    if (state.player === playerBlue && isPlayingWithAI) {
+    if (player === playerBlue && isPlayingWithAI) {
       selectColumn(IAPlayer.playColumn(board, playerBlue, playerRed));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
-  function Winner() {
-    return (
-      <>
-        <div>
-          {isPlayingWithAI && winner === playerBlue ? 'AI' : winner} wins !
-          <button
-            type="button"
-            style={{
-              marginLeft: '8px',
-            }}
-            onClick={() => restart()}
-          >
-            Restart
-          </button>
-        </div>
-      </>
-    );
-  }
-
   return (
     <div>
-      {winner === null ? `${player.toUpperCase()} plays` : <Winner />}
+      {winner === null ? (
+        `${player.toUpperCase()} plays`
+      ) : (
+        <Winner name={isPlayingWithAI && winner === playerBlue ? 'AI' : winner} onClick={restart} />
+      )}
       <P4Board
         board={board}
         borderColor={winner === null ? player : CircleColor.victory}
