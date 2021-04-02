@@ -8,19 +8,19 @@ class IAPlayer {
     let column = -1;
     let randomPlay = 0;
 
-    const winingPossibility = IAPlayer.checkAWinningPossibilityFor(aiPlayer, board);
+    const winingPossibilities = IAPlayer.checkAWinningPossibilitiesFor(aiPlayer, board);
 
-    if (winingPossibility !== null) {
-      return winingPossibility;
+    if (winingPossibilities !== null) {
+      return winingPossibilities;
     }
 
-    const winingPossibilityForOtherPlayer = IAPlayer.checkAWinningPossibilityFor(
+    const winingPossibilitiesForOtherPlayer = IAPlayer.checkAWinningPossibilitiesFor(
       otherPlayer,
       board,
     );
 
-    if (winingPossibilityForOtherPlayer !== null) {
-      return winingPossibilityForOtherPlayer;
+    if (winingPossibilitiesForOtherPlayer !== null) {
+      return winingPossibilitiesForOtherPlayer;
     }
 
     // if (this.mustControlTheCenter(board)) {
@@ -43,14 +43,33 @@ class IAPlayer {
 
   /*
    to avoid or create ' ', ' ', 'red', 'red' ,'red', ' ' case to win
+   | |X|X| | | | |
+   | | |X|X| | | |
+   | | | |X|X| | |
+   | | | | |X|X| |
    */
 
-  // static detectdoubleInHorizontalTactic(board: string[][]): number | null {
-
+  // static playerCanPlayDoubleInHorizontalTactic(board: string[][], player: String): number | null{
   //   return null;
   // }
 
-  static checkAWinningPossibilityFor(player: string, board: string[][]): number | null {
+  static forbiddenColomnToPlay(board: string[][], opponent: string): number[] {
+    let forbiddenPlay: number[] = [];
+
+    for (let columnIndex = 0; columnIndex < P4.columsNumbers; columnIndex++) {
+      const row = P4.availableRowIn(board, columnIndex);
+      if (row !== -1) {
+        let boardCopy = _.cloneDeep(board);
+        boardCopy[row][columnIndex] = 'blue';
+        if (IAPlayer.checkAWinningPossibilitiesFor(opponent, boardCopy) !== null) {
+          forbiddenPlay.push(columnIndex);
+        }
+      }
+    }
+    return forbiddenPlay;
+  }
+
+  static checkAWinningPossibilitiesFor(player: string, board: string[][]): number | null {
     for (let col = 0; col < P4.columsNumbers; col++) {
       const availableRow = P4.availableRowIn(board, col);
 

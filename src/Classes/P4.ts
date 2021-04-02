@@ -21,6 +21,16 @@ class P4 {
     return lastIndex;
   }
 
+  static availableRowsIn(board: string[][], column: number): number[] {
+    const topRow = board[0];
+    const availableRows: number[] = [];
+    topRow.forEach((element, index) => {
+      if (element === '') {
+        availableRows.push(index);
+      }
+    });
+  }
+
   static resultForMove(row: number, column: number, board: string[][]): number[][] | null {
     let currentPlayer = '';
     let winningPositions: number[][] = [];
