@@ -21,7 +21,7 @@ class P4 {
     return lastIndex;
   }
 
-  static availableRowsIn(board: string[][], column: number): number[] {
+  static noFilledColomnIn(board: string[][]): number[] {
     const topRow = board[0];
     const availableRows: number[] = [];
     topRow.forEach((element, index) => {
@@ -29,6 +29,8 @@ class P4 {
         availableRows.push(index);
       }
     });
+
+    return availableRows;
   }
 
   static resultForMove(row: number, column: number, board: string[][]): number[][] | null {

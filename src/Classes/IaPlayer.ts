@@ -6,8 +6,6 @@ class IAPlayer {
 
   static playColumn(board: string[][], aiPlayer: string, otherPlayer: string): number {
     let column = -1;
-    let randomPlay = 0;
-
     const winingPossibilities = IAPlayer.checkAWinningPossibilitiesFor(aiPlayer, board);
 
     if (winingPossibilities !== null) {
@@ -27,12 +25,18 @@ class IAPlayer {
     //   return 3;
     // }
 
-    while (column === -1) {
-      randomPlay = IAPlayer.randomColumn();
-      column = P4.availableRowIn(board, randomPlay);
+    const safeMoves = this.safeColomnToPlay(board, otherPlayer);
+    console.log(`safe: ${safeMoves} bad: ${this.badColomnToPlay(board, otherPlayer)}`);
+    if (safeMoves.length === 0) {
+      console.log('boom');
+      // eslint-disable-next-line prefer-destructuring
+      column = this.badColomnToPlay(board, otherPlayer)[0];
+    } else {
+      // eslint-disable-next-line prefer-destructuring
+      column = _.shuffle(safeMoves)[0];
     }
-
-    return randomPlay;
+    console.log(`play ${column}`);
+    return column;
   }
 
   /* control the center */
@@ -53,13 +57,31 @@ class IAPlayer {
   //   return null;
   // }
 
-  static forbiddenColomnToPlay(board: string[][], opponent: string): number[] {
-    let forbiddenPlay: number[] = [];
+  /* return colums of other player can't win if ia play it */
+  static safeColomnToPlay(board: string[][], opponent: string): number[] {
+    const safePlayColumn: number[] = [];
 
     for (let columnIndex = 0; columnIndex < P4.columsNumbers; columnIndex++) {
       const row = P4.availableRowIn(board, columnIndex);
       if (row !== -1) {
-        let boardCopy = _.cloneDeep(board);
+        const boardCopy = _.cloneDeep(board);
+        boardCopy[row][columnIndex] = 'blue';
+        if (IAPlayer.checkAWinningPossibilitiesFor(opponent, boardCopy) === null) {
+          safePlayColumn.push(columnIndex);
+        }
+      }
+    }
+    return safePlayColumn;
+  }
+
+  /* return colums of other player can win if ia play it */
+  static badColomnToPlay(board: string[][], opponent: string): number[] {
+    const forbiddenPlay: number[] = [];
+
+    for (let columnIndex = 0; columnIndex < P4.columsNumbers; columnIndex++) {
+      const row = P4.availableRowIn(board, columnIndex);
+      if (row !== -1) {
+        const boardCopy = _.cloneDeep(board);
         boardCopy[row][columnIndex] = 'blue';
         if (IAPlayer.checkAWinningPossibilitiesFor(opponent, boardCopy) !== null) {
           forbiddenPlay.push(columnIndex);
