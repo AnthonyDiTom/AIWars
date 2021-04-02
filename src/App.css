@@ -19,7 +19,7 @@
   margin: 20px;
 }
 
-.square {
+.circle {
   background: #fff;
   float: left;
   height: 34px;
@@ -28,12 +28,12 @@
   margin: 2px;
 }
 
-.square:focus {
+.circle:focus {
   outline: none;
   background: rgb(148, 75, 75);
 }
 
-.App-header {
+.App-body {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;

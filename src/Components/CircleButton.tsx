@@ -12,8 +12,8 @@ function CircleButton({ color, onclick }: RoundButtonProps) {
       tabIndex={0}
       style={{ backgroundColor: color }}
       role="button"
-      className="square"
-      aria-label="square"
+      className="circle"
+      aria-label="circle"
       onClick={onclick}
       onKeyPress={onclick}
     />

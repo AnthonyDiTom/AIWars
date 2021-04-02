@@ -25,7 +25,7 @@ class P4 {
     return lastIndex;
   }
 
-  static noFilledColomnIn(board: Board): number[] {
+  static availableColomnIn(board: Board): number[] {
     const topRow = board[0];
     const availableRows: number[] = [];
     topRow.forEach((element, index) => {
@@ -37,7 +37,8 @@ class P4 {
     return availableRows;
   }
 
-  static resultForMove(row: number, column: number, board: Board): Positions | null {
+  // TODO : duplicate code
+  static winningPositionsForMove(row: number, column: number, board: Board): Positions | null {
     let currentPlayer = '';
     let winningPositions: Positions = [];
     let potentialWiningPositions: Positions = [];

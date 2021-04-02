@@ -6,9 +6,9 @@ import Puissance4Reducer from './Screens/Puissance4Reducer';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-body">
         <Puissance4 />
-      </header>
+      </div>
     </div>
   );
 }

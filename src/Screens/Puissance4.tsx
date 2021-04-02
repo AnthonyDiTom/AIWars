@@ -54,7 +54,7 @@ function Puissance4() {
     board[row][column] = player;
     setBoard(board);
 
-    const winPositions = P4.resultForMove(row, column, board);
+    const winPositions = P4.winningPositionsForMove(row, column, board);
     if (winPositions !== null) {
       setVictory(player, winPositions);
     }
