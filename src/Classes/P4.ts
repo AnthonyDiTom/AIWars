@@ -1,5 +1,4 @@
-type Board = string[][];
-export type { Board };
+import type { Board, Positions } from './Types';
 
 class P4 {
   static columsNumbers = 7;
@@ -38,11 +37,11 @@ class P4 {
     return availableRows;
   }
 
-  static resultForMove(row: number, column: number, board: Board): number[][] | null {
+  static resultForMove(row: number, column: number, board: Board): Positions | null {
     let currentPlayer = '';
-    let winningPositions: number[][] = [];
-    let potentialWiningPositions: number[][] = [];
-    let currentCheckWiningPosition: number[][] = [];
+    let winningPositions: Positions = [];
+    let potentialWiningPositions: Positions = [];
+    let currentCheckWiningPosition: Positions = [];
 
     // Horizontal
     for (let colIndex = 0; colIndex < P4.columsNumbers; colIndex++) {

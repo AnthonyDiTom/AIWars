@@ -6,9 +6,10 @@ import IAPlayer from '../Classes/IaPlayer';
 import CheckBox from '../Components/CheckBox';
 import P4Board from '../Components/P4Board';
 import Winner from '../Components/Winner';
+import { Board } from '../Classes/Types';
 
 interface State {
-  board: string[][];
+  board: Board;
   player: string;
   winner: string | null;
   isPlayingWithAI: boolean;

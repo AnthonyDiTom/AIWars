@@ -5,6 +5,7 @@ import IAPlayer from '../Classes/IaPlayer';
 import CheckBox from '../Components/CheckBox';
 import P4Board from '../Components/P4Board';
 import Winner from '../Components/Winner';
+import { Positions } from '../Classes/Types';
 
 function Puissance4() {
   enum CircleColor {
@@ -29,7 +30,7 @@ function Puissance4() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player, isPlayingWithAI]);
 
-  function setVictory(winnerName: string, positions: number[][]) {
+  function setVictory(winnerName: string, positions: Positions) {
     setWinner(winnerName);
     positions.forEach((value) => {
       const [row, column] = value;

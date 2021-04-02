@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import P4 from './P4';
-import type { Board } from './P4';
+import type { Board } from './Types';
 
 class IAPlayer {
   static randomColumn = () => Math.floor(Math.random() * Math.floor(P4.columsNumbers - 1));
