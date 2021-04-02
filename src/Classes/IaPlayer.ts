@@ -22,8 +22,12 @@ class IAPlayer {
       return winingPossibilitiesForOtherPlayer;
     }
 
-    if (this.mustControlTheCenter(board)) {
+    if (this.canControlTheCenter(board)) {
       return 3;
+    }
+
+    if (this.opponentControlTheCenter(board, aiPlayer, otherPlayer)) {
+      return _.shuffle([2, 4])[0];
     }
 
     const safeMoves = this.safeColomnToPlay(board, otherPlayer);
@@ -35,16 +39,18 @@ class IAPlayer {
       // eslint-disable-next-line prefer-destructuring
       column = _.shuffle(safeMoves)[0];
     }
-    // console.log(`play ${column}`);
     return column;
   }
 
   /* control the center */
 
-  static mustControlTheCenter(board: Board): boolean {
+  static canControlTheCenter(board: Board): boolean {
     return board[P4.rowsNumber - 1][3] === '';
   }
 
+  static opponentControlTheCenter(board: Board, ia: string, opponent: string): boolean {
+    return board[P4.rowsNumber - 1][3] === opponent && !board[P4.rowsNumber - 1].includes(ia);
+  }
   /*
    to avoid or create ' ', ' ', 'red', 'red' ,'red', ' ' case to win
    | |X|X| | | | |
