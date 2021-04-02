@@ -1,17 +1,22 @@
+type Board = string[][];
+export type { Board };
+
 class P4 {
   static columsNumbers = 7;
 
   static rowsNumber = 6;
 
-  static newBoard = (): string[][] => {
-    const array: string[][] = [];
+  static newBoard = (): Board => {
+    const array: Board = [];
     for (let index = 0; index < P4.rowsNumber; index++) {
       array.push(Array(P4.columsNumbers).fill(''));
     }
     return array;
   };
 
-  static availableRowIn(board: string[][], column: number): number {
+  static equality = (board: Board) => !board[0].includes('');
+
+  static availableRowIn(board: Board, column: number): number {
     let lastIndex = -1;
     board.forEach((value, index) => {
       if (value[column] === '') {
@@ -21,7 +26,7 @@ class P4 {
     return lastIndex;
   }
 
-  static noFilledColomnIn(board: string[][]): number[] {
+  static noFilledColomnIn(board: Board): number[] {
     const topRow = board[0];
     const availableRows: number[] = [];
     topRow.forEach((element, index) => {
@@ -33,7 +38,7 @@ class P4 {
     return availableRows;
   }
 
-  static resultForMove(row: number, column: number, board: string[][]): number[][] | null {
+  static resultForMove(row: number, column: number, board: Board): number[][] | null {
     let currentPlayer = '';
     let winningPositions: number[][] = [];
     let potentialWiningPositions: number[][] = [];

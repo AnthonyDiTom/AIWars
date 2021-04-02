@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import P4 from './P4';
+import type { Board } from './P4';
 
 class IAPlayer {
   static randomColumn = () => Math.floor(Math.random() * Math.floor(P4.columsNumbers - 1));
 
-  static playColumn(board: string[][], aiPlayer: string, otherPlayer: string): number {
+  static playColumn(board: Board, aiPlayer: string, otherPlayer: string): number {
     let column = -1;
     const winingPossibilities = IAPlayer.checkAWinningPossibilitiesFor(aiPlayer, board);
 
@@ -21,28 +22,27 @@ class IAPlayer {
       return winingPossibilitiesForOtherPlayer;
     }
 
-    // if (this.mustControlTheCenter(board)) {
-    //   return 3;
-    // }
+    if (this.mustControlTheCenter(board)) {
+      return 3;
+    }
 
     const safeMoves = this.safeColomnToPlay(board, otherPlayer);
-    console.log(`safe: ${safeMoves} bad: ${this.badColomnToPlay(board, otherPlayer)}`);
+    // console.log(`safe: ${safeMoves} bad: ${this.badColomnToPlay(board, otherPlayer)}`);
     if (safeMoves.length === 0) {
-      console.log('boom');
       // eslint-disable-next-line prefer-destructuring
       column = this.badColomnToPlay(board, otherPlayer)[0];
     } else {
       // eslint-disable-next-line prefer-destructuring
       column = _.shuffle(safeMoves)[0];
     }
-    console.log(`play ${column}`);
+    // console.log(`play ${column}`);
     return column;
   }
 
   /* control the center */
 
-  static mustControlTheCenter(board: string[][]): boolean {
-    return P4.availableRowIn(board, 3) !== -1;
+  static mustControlTheCenter(board: Board): boolean {
+    return board[P4.rowsNumber - 1][3] === '';
   }
 
   /*
@@ -58,7 +58,7 @@ class IAPlayer {
   // }
 
   /* return colums of other player can't win if ia play it */
-  static safeColomnToPlay(board: string[][], opponent: string): number[] {
+  static safeColomnToPlay(board: Board, opponent: string): number[] {
     const safePlayColumn: number[] = [];
 
     for (let columnIndex = 0; columnIndex < P4.columsNumbers; columnIndex++) {
@@ -75,7 +75,7 @@ class IAPlayer {
   }
 
   /* return colums of other player can win if ia play it */
-  static badColomnToPlay(board: string[][], opponent: string): number[] {
+  static badColomnToPlay(board: Board, opponent: string): number[] {
     const forbiddenPlay: number[] = [];
 
     for (let columnIndex = 0; columnIndex < P4.columsNumbers; columnIndex++) {
@@ -91,7 +91,7 @@ class IAPlayer {
     return forbiddenPlay;
   }
 
-  static checkAWinningPossibilitiesFor(player: string, board: string[][]): number | null {
+  static checkAWinningPossibilitiesFor(player: string, board: Board): number | null {
     for (let col = 0; col < P4.columsNumbers; col++) {
       const availableRow = P4.availableRowIn(board, col);
 

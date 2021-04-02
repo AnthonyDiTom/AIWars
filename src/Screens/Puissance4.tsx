@@ -18,7 +18,7 @@ function Puissance4() {
   const [board, setBoard] = useState(P4.newBoard);
   const [player, setPlayer] = useState(playerRed);
   const [winner, setWinner] = useState<string | null>(null);
-  const [isPlayingWithAI, setIsPlayingWithAI] = useState(false);
+  const [isPlayingWithAI, setIsPlayingWithAI] = useState(true);
 
   const setNextPlayer = () => setPlayer(player === playerRed ? playerBlue : playerRed);
 
@@ -41,6 +41,7 @@ function Puissance4() {
   function restart() {
     setWinner(null);
     setBoard(P4.newBoard);
+    setPlayer(playerRed);
   }
 
   function selectColumn(column: number) {

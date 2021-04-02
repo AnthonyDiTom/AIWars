@@ -1,9 +1,10 @@
 import React from 'react';
 import '../App.css';
 import CircleButton from './CircleButton';
+import type { Board } from '../Classes/P4';
 
 type P4BoardProps = {
-  board: string[][];
+  board: Board;
   borderColor: string;
   selectColumn: (column: number) => void;
 };
