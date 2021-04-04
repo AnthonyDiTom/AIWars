@@ -62,12 +62,22 @@ function Puissance4() {
     setNextPlayer();
   }
 
+  const winnerName = (): string => {
+    switch (isPlayingWithAI) {
+      case true:
+        return winner === playerBlue ? 'AI' : 'Player';
+
+      default:
+        return winner || 'undefined';
+    }
+  };
+
   return (
     <div>
       {winner === null ? (
         `${player.toUpperCase()} plays`
       ) : (
-        <Winner name={isPlayingWithAI && winner === playerBlue ? 'AI' : winner} onClick={restart} />
+        <Winner name={winnerName().toUpperCase()} onClick={restart} />
       )}
       <P4Board
         board={board}
