@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 
-function Navigation() {
+function Mastermind() {
   return (
     <div>
       <h1>Mastermind</h1>
@@ -9,4 +9,4 @@ function Navigation() {
   );
 }
 
-export default Navigation;
+export default Mastermind;
