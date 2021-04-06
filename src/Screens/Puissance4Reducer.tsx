@@ -103,12 +103,22 @@ function Puissance4Reducer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
+  const winnerName = (): string => {
+    switch (isPlayingWithAI) {
+      case true:
+        return winner === playerBlue ? 'AI' : 'Player';
+
+      default:
+        return winner || 'undefined';
+    }
+  };
+
   return (
     <div>
       {winner === null ? (
         `${player.toUpperCase()} plays`
       ) : (
-        <Winner name={isPlayingWithAI && winner === playerBlue ? 'AI' : winner} onClick={restart} />
+        <Winner name={winnerName().toUpperCase()} onClick={restart} />
       )}
       <P4Board
         board={board}
