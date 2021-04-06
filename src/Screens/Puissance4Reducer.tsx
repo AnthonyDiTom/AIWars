@@ -32,7 +32,7 @@ function Puissance4Reducer() {
     board: P4.newBoard(),
     player: CircleColor.playerRed,
     winner: null,
-    isPlayingWithAI: true,
+    isPlayingWithAI: false,
   });
 
   const { playerRed, playerBlue } = CircleColor;
