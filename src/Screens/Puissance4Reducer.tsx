@@ -41,7 +41,7 @@ function Puissance4Reducer() {
   const play = (game: State, row: number, column: number): State => {
     const boardCopy = _.cloneDeep(game.board);
     boardCopy[row][column] = game.player;
-    const winPositions = P4.winningPositionsForMove(row, column, boardCopy);
+    const winPositions = P4.winningPositionsForLastMove(row, column, boardCopy);
 
     if (winPositions !== null) {
       winPositions.forEach((value) => {

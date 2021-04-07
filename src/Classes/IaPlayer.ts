@@ -104,7 +104,7 @@ class IAPlayer {
       if (availableRow !== -1) {
         const boardCopy = _.cloneDeep(board);
         boardCopy[availableRow][col] = player;
-        const winningPositions = P4.winningPositionsForMove(availableRow, col, boardCopy);
+        const winningPositions = P4.winningPositionsForLastMove(availableRow, col, boardCopy);
         if (winningPositions != null) {
           return col;
         }

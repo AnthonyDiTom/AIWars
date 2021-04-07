@@ -36,7 +36,7 @@ class P4 {
   }
 
   // TODO : duplicate code
-  static winningPositionsForMove(row: number, column: number, board: Board): Positions | null {
+  static winningPositionsForLastMove(row: number, column: number, board: Board): Positions | null {
     let currentPlayer = '';
     let winningPositions: Positions = [];
     let potentialWiningPositions: Positions = [];
