@@ -13,8 +13,6 @@ class P4 {
     return array;
   };
 
-  static equality = (board: Board) => !board[0].includes('');
-
   static availableRowIn(board: Board, column: number): number {
     let lastIndex = -1;
     board.forEach((value, index) => {

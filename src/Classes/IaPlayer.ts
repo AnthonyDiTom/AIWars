@@ -7,19 +7,19 @@ class IAPlayer {
 
   static playColumn(board: Board, aiPlayer: string, otherPlayer: string): number {
     let column = -1;
-    const winingPossibilities = IAPlayer.checkAWinningPossibilitiesFor(aiPlayer, board);
+    const winingPossibilities = IAPlayer.checkAWinningPossibilityFor(aiPlayer, board);
 
     if (winingPossibilities !== null) {
       return winingPossibilities;
     }
 
-    const winingPossibilitiesForOtherPlayer = IAPlayer.checkAWinningPossibilitiesFor(
+    const winingPossibilityForOtherPlayer = IAPlayer.checkAWinningPossibilityFor(
       otherPlayer,
       board,
     );
 
-    if (winingPossibilitiesForOtherPlayer !== null) {
-      return winingPossibilitiesForOtherPlayer;
+    if (winingPossibilityForOtherPlayer !== null) {
+      return winingPossibilityForOtherPlayer;
     }
 
     if (this.canControlTheCenter(board)) {
@@ -30,7 +30,7 @@ class IAPlayer {
       return _.shuffle([2, 4])[0];
     }
 
-    const safeMoves = this.safeColomnToPlay(board, otherPlayer);
+    const safeMoves = this.safeColomnsToPlay(board, otherPlayer);
     // console.log(`safe: ${safeMoves} bad: ${this.badColomnToPlay(board, otherPlayer)}`);
     if (safeMoves.length === 0) {
       // eslint-disable-next-line prefer-destructuring
@@ -64,7 +64,7 @@ class IAPlayer {
   // }
 
   /* return colums of other player can't win if ia play it */
-  static safeColomnToPlay(board: Board, opponent: string): number[] {
+  static safeColomnsToPlay(board: Board, opponent: string): number[] {
     const safePlayColumn: number[] = [];
 
     for (let columnIndex = 0; columnIndex < P4.columsNumbers; columnIndex++) {
@@ -72,7 +72,7 @@ class IAPlayer {
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
         boardCopy[row][columnIndex] = 'blue';
-        if (IAPlayer.checkAWinningPossibilitiesFor(opponent, boardCopy) === null) {
+        if (IAPlayer.checkAWinningPossibilityFor(opponent, boardCopy) === null) {
           safePlayColumn.push(columnIndex);
         }
       }
@@ -89,7 +89,7 @@ class IAPlayer {
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
         boardCopy[row][columnIndex] = 'blue';
-        if (IAPlayer.checkAWinningPossibilitiesFor(opponent, boardCopy) !== null) {
+        if (IAPlayer.checkAWinningPossibilityFor(opponent, boardCopy) !== null) {
           forbiddenPlay.push(columnIndex);
         }
       }
@@ -97,7 +97,7 @@ class IAPlayer {
     return forbiddenPlay;
   }
 
-  static checkAWinningPossibilitiesFor(player: string, board: Board): number | null {
+  static checkAWinningPossibilityFor(player: string, board: Board): number | null {
     for (let col = 0; col < P4.columsNumbers; col++) {
       const availableRow = P4.availableRowIn(board, col);
 
