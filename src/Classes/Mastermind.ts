@@ -15,7 +15,7 @@ export enum MMPositionResult {
   absent = 2,
 }
 
-class MM {
+class Mastermind {
   static COLORS = [
     MMColor.black,
     MMColor.blue,
@@ -32,17 +32,17 @@ class MM {
   colorsTries: MMColor[][];
 
   constructor() {
-    this.colorsToFind = MM.generateRandomColorsToFind();
+    this.colorsToFind = Mastermind.generateRandomColorsToFind();
     this.colorsTries = [];
   }
 
   restartGame() {
-    this.colorsToFind = MM.generateRandomColorsToFind();
+    this.colorsToFind = Mastermind.generateRandomColorsToFind();
     this.colorsTries = [];
   }
 
   tryWithColorsPositions(positions: MMColor[]): MMPositionResult[] {
-    if (positions.length !== MM.NUMBEROF_COLOR_TO_FIND) {
+    if (positions.length !== Mastermind.NUMBEROF_COLOR_TO_FIND) {
       throw new Error('unexpected positions size');
     }
     this.colorsTries.push(positions);
@@ -56,7 +56,7 @@ class MM {
         positionsResult.push(MMPositionResult.absent);
       }
     });
-    return MM.sortPositonsResult(positionsResult);
+    return Mastermind.sortPositonsResult(positionsResult);
   }
 
   static sortPositonsResult(positions: MMPositionResult[]): MMPositionResult[] {
@@ -65,11 +65,11 @@ class MM {
 
   static generateRandomColorsToFind(): MMColor[] {
     const colors: MMColor[] = [];
-    for (let index = 0; index < MM.NUMBEROF_COLOR_TO_FIND; index++) {
-      colors.push(_.shuffle(MM.COLORS)[0]);
+    for (let index = 0; index < Mastermind.NUMBEROF_COLOR_TO_FIND; index++) {
+      colors.push(_.shuffle(Mastermind.COLORS)[0]);
     }
     return colors;
   }
 }
 
-export default MM;
+export default Mastermind;

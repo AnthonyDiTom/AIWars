@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import '../App.css';
 import P4 from '../Classes/P4';
-import IAPlayer from '../Classes/IaPlayer';
+import P4IAPlayer from '../Classes/P4IaPlayer';
 import CheckBox from '../Components/CheckBox';
 import P4Board from '../Components/P4Board';
 import Winner from '../Components/Winner';
 import { Positions } from '../Classes/Types';
 
-function Puissance4() {
+function Puissance4Page() {
   enum CircleColor {
     playerRed = 'red',
     playerBlue = 'blue',
@@ -25,7 +25,7 @@ function Puissance4() {
 
   React.useEffect(() => {
     if (player === playerBlue && isPlayingWithAI) {
-      selectColumn(IAPlayer.playColumn(board, playerBlue, playerRed));
+      selectColumn(P4IAPlayer.playColumn(board, playerBlue, playerRed));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player, isPlayingWithAI]);
@@ -93,4 +93,4 @@ function Puissance4() {
   );
 }
 
-export default Puissance4;
+export default Puissance4Page;

@@ -2,18 +2,18 @@ import _ from 'lodash';
 import P4 from './P4';
 import type { Board } from './Types';
 
-class IAPlayer {
+class P4IAPlayer {
   static randomColumn = () => Math.floor(Math.random() * Math.floor(P4.columsNumbers - 1));
 
   static playColumn(board: Board, aiPlayer: string, otherPlayer: string): number {
     let column = -1;
-    const winingPossibilities = IAPlayer.checkAWinningPossibilityFor(aiPlayer, board);
+    const winingPossibilities = P4IAPlayer.checkAWinningPossibilityFor(aiPlayer, board);
 
     if (winingPossibilities !== null) {
       return winingPossibilities;
     }
 
-    const winingPossibilityForOtherPlayer = IAPlayer.checkAWinningPossibilityFor(
+    const winingPossibilityForOtherPlayer = P4IAPlayer.checkAWinningPossibilityFor(
       otherPlayer,
       board,
     );
@@ -72,7 +72,7 @@ class IAPlayer {
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
         boardCopy[row][columnIndex] = 'blue';
-        if (IAPlayer.checkAWinningPossibilityFor(opponent, boardCopy) === null) {
+        if (P4IAPlayer.checkAWinningPossibilityFor(opponent, boardCopy) === null) {
           safePlayColumn.push(columnIndex);
         }
       }
@@ -89,7 +89,7 @@ class IAPlayer {
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
         boardCopy[row][columnIndex] = 'blue';
-        if (IAPlayer.checkAWinningPossibilityFor(opponent, boardCopy) !== null) {
+        if (P4IAPlayer.checkAWinningPossibilityFor(opponent, boardCopy) !== null) {
           forbiddenPlay.push(columnIndex);
         }
       }
@@ -114,4 +114,4 @@ class IAPlayer {
   }
 }
 
-export default IAPlayer;
+export default P4IAPlayer;

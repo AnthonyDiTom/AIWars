@@ -1,16 +1,16 @@
-import MM, { MMColor as C, MMPositionResult } from './MM';
+import Mastermind, { MMColor as C, MMPositionResult } from './Mastermind';
 
 const { good, bad, absent } = MMPositionResult;
 
 test('test mastermind', () => {
-  const mm = new MM();
+  const mm = new Mastermind();
 
-  expect(mm.colorsToFind.length).toEqual(MM.NUMBEROF_COLOR_TO_FIND);
+  expect(mm.colorsToFind.length).toEqual(Mastermind.NUMBEROF_COLOR_TO_FIND);
   expect(mm.colorsTries.length).toEqual(0);
 });
 
 test('test mastermind result', () => {
-  const mm = new MM();
+  const mm = new Mastermind();
   mm.colorsToFind = [C.blue, C.red, C.black, C.green];
 
   expect(mm.tryWithColorsPositions([C.blue, C.red, C.black, C.green])).toStrictEqual([

@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import _ from 'lodash';
 import '../App.css';
 import P4 from '../Classes/P4';
-import IAPlayer from '../Classes/IaPlayer';
+import P4IAPlayer from '../Classes/P4IaPlayer';
 import CheckBox from '../Components/CheckBox';
 import P4Board from '../Components/P4Board';
 import Winner from '../Components/Winner';
@@ -20,7 +20,7 @@ type Action =
   | { type: 'play'; row: number; column: number }
   | { type: 'switch-ia-enabled' };
 
-function Puissance4Reducer() {
+function Puissance4ReducerPage() {
   enum CircleColor {
     playerRed = 'red',
     playerBlue = 'blue',
@@ -98,7 +98,7 @@ function Puissance4Reducer() {
 
   React.useEffect(() => {
     if (player === playerBlue && isPlayingWithAI) {
-      selectColumn(IAPlayer.playColumn(board, playerBlue, playerRed));
+      selectColumn(P4IAPlayer.playColumn(board, playerBlue, playerRed));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
@@ -134,4 +134,4 @@ function Puissance4Reducer() {
   );
 }
 
-export default Puissance4Reducer;
+export default Puissance4ReducerPage;
