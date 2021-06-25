@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import '../App.css';
-import P4 from '../Classes/P4';
-import P4IAPlayer from '../Classes/P4IaPlayer';
-import CheckBox from '../Components/CheckBox';
-import P4Board from '../Components/P4Board';
-import Winner from '../Components/Winner';
-import { Positions } from '../Classes/Types';
+import '../../App.css';
+import P4 from '../../classes/P4';
+import P4IAPlayer from '../../classes/P4IaPlayer';
+import CheckBox from '../CheckBox';
+import P4Board from './P4Board';
+import Winner from './Winner';
+import { Positions } from '../../classes/Types';
 
 function Puissance4Page() {
   enum CircleColor {

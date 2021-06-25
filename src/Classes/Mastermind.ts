@@ -29,23 +29,23 @@ class Mastermind {
 
   colorsToFind: MMColor[];
 
-  colorsTries: MMColor[][];
+  playerAttempts: MMColor[][];
 
   constructor() {
-    this.colorsToFind = Mastermind.generateRandomColorsToFind();
-    this.colorsTries = [];
+    this.colorsToFind = Mastermind.generateRandomColors();
+    this.playerAttempts = [];
   }
 
   restartGame() {
-    this.colorsToFind = Mastermind.generateRandomColorsToFind();
-    this.colorsTries = [];
+    this.colorsToFind = Mastermind.generateRandomColors();
+    this.playerAttempts = [];
   }
 
-  tryWithColorsPositions(positions: MMColor[]): MMPositionResult[] {
+  playerTriesColors(positions: MMColor[]): MMPositionResult[] {
     if (positions.length !== Mastermind.NUMBEROF_COLOR_TO_FIND) {
       throw new Error('unexpected positions size');
     }
-    this.colorsTries.push(positions);
+    this.playerAttempts.push(positions);
     const positionsResult: MMPositionResult[] = [];
     this.colorsToFind.forEach((value, index) => {
       if (positions[index] === value) {
@@ -63,7 +63,7 @@ class Mastermind {
     return positions.sort((posA, posb) => (posA > posb ? 1 : -1));
   }
 
-  static generateRandomColorsToFind(): MMColor[] {
+  static generateRandomColors(): MMColor[] {
     const colors: MMColor[] = [];
     for (let index = 0; index < Mastermind.NUMBEROF_COLOR_TO_FIND; index++) {
       colors.push(_.shuffle(Mastermind.COLORS)[0]);

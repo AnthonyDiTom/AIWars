@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Navigation from './Components/Navigation';
-import MastermindPage from './Screens/MastermindPage';
-import Puissance4Page from './Screens/Puissance4Page';
-import Puissance4ReducerPage from './Screens/Puissance4ReducerPage';
+import Navigation from './components/Navigation';
+import MastermindPage from './components/mastermind/MastermindPage';
+import Puissance4Page from './components/fourInARow/Puissance4Page';
+import Puissance4ReducerPage from './components/fourInARow/Puissance4ReducerPage';
 
 function App() {
   return (

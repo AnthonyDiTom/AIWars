@@ -1,7 +1,6 @@
 import React from 'react';
-import '../App.css';
 import CircleButton from './CircleButton';
-import type { Board } from '../Classes/Types';
+import type { Board } from '../../classes/Types';
 
 type P4BoardProps = {
   board: Board;
