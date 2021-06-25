@@ -6,6 +6,7 @@ import CheckBox from '../CheckBox';
 import P4Board from './P4Board';
 import Winner from './Winner';
 import { Positions } from '../../classes/Types';
+import PlayerSelector from './PlayerSelector';
 
 function Puissance4Page() {
   enum CircleColor {
@@ -74,6 +75,8 @@ function Puissance4Page() {
 
   return (
     <div>
+      {/* <PlayerSelector defaultName="Player 1" />
+      <PlayerSelector defaultName="Player 2" /> */}
       {winner === null ? (
         `${player.toUpperCase()} plays`
       ) : (
