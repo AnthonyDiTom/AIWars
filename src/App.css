@@ -2,35 +2,12 @@
   text-align: center;
 }
 
-.p4Board {
-  display: flex;
-  margin: 20px;
-  border-radius: 20px;
-  border: 1px solid #fff;
-  flex-direction: column;
-  padding: 16px;
-}
-
 .checkBox {
   border-radius: 20px;
   border: 1px solid #fff;
   flex-direction: row;
   padding: 8px;
   margin: 20px;
-}
-
-.circle {
-  background: #fff;
-  float: left;
-  height: 34px;
-  width: 34px;
-  border-radius: 17px;
-  margin: 2px;
-}
-
-.circle:focus {
-  outline: none;
-  background: rgb(148, 75, 75);
 }
 
 .App-body {
