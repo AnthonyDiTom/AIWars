@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
+import { RoutePath } from '../Routes';
 import NavButton from './styles/NavButton';
 
 function Navigation() {
@@ -8,14 +9,11 @@ function Navigation() {
 
   return (
     <div style={{ display: 'flex', backgroundColor: '#282c34' }}>
-      <Link to="/">
-        <NavButton style={liStyle}>Puissance 4</NavButton>
+      <Link to={RoutePath.root}>
+        <NavButton style={liStyle}>Puissance 4 |</NavButton>
       </Link>
-      <Link to="/P4reducer">
-        <NavButton style={liStyle}>Puissance 4 reducer</NavButton>
-      </Link>
-      <Link to="/Test">
-        <NavButton style={liStyle}>Tests</NavButton>
+      <Link to={RoutePath.p4Multiplayer}>
+        <NavButton style={liStyle}>Puissance 4 multiplayer |</NavButton>
       </Link>
     </div>
   );

@@ -6,7 +6,6 @@ import CheckBox from '../CheckBox';
 import P4Board from './P4Board';
 import Winner from './Winner';
 import { Positions } from '../../classes/Types';
-import PlayerSelector from './PlayerSelector';
 
 function Puissance4Page() {
   enum CircleColor {
