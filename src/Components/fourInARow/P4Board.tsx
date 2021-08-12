@@ -1,6 +1,6 @@
 import React from 'react';
 import CircleButton from '../styles/CircleButton';
-import type { Board } from '../../classes/Types';
+import { Board } from '../../classes/Types';
 import BorderBox from '../styles/BorderBox';
 
 type P4BoardProps = {

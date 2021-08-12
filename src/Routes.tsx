@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { P4MultiplayerPage } from './components/fourInARow/P4MultiplayerPage';
+import P4MultiplayerPage from './components/fourInARow/P4MultiplayerPage';
 import Puissance4Page from './components/fourInARow/Puissance4Page';
 
 export enum RoutePath {

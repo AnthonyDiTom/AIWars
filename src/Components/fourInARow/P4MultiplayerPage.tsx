@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const P4MultiplayerPage = () => {
+const P4MultiplayerPage = () => {
   const a = '';
   return (
     <div>
@@ -8,3 +8,4 @@ export const P4MultiplayerPage = () => {
     </div>
   );
 };
+export default P4MultiplayerPage;
