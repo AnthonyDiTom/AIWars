@@ -1,17 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import './App.css';
 import Navigation from './components/navigation/Navigation';
+import GlobalStyle from './components/styles/globalStyles';
 import Routes from './Routes';
 
 function App() {
   return (
-    <div className="App">
+    <div>
+      <GlobalStyle />
       <Router>
         <Navigation />
-        <div className="App-body">
-          <Routes />
-        </div>
+        <Routes />
       </Router>
     </div>
   );

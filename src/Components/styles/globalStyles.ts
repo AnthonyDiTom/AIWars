@@ -10,6 +10,18 @@ const GlobalStyle = createGlobalStyle`
  } 
 `;
 
+export const Page = styled.div`
+  background-color: #282c34;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+`;
+
 export const Container = styled.div`
   z-index: 1;
   width: 100%;

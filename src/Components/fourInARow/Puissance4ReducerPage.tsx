@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
 import _ from 'lodash';
-import '../../App.css';
 import P4 from '../../classes/P4';
 import P4IAPlayer from '../../classes/P4IaPlayer';
 import CheckBox from '../CheckBox';

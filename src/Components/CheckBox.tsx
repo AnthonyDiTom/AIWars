@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import styled from 'styled-components';
 
 type CheckBoxProps = {
   isChecked: boolean;
@@ -7,9 +7,17 @@ type CheckBoxProps = {
   onChange: () => void;
 };
 
+const CheckBoxContainer = styled.div`
+  border-radius: 20px;
+  border: 1px solid #fff;
+  flex-direction: row;
+  padding: 8px;
+  margin: 20px;
+`;
+
 function CheckBox({ isChecked, label, onChange }: CheckBoxProps) {
   return (
-    <div className="checkBox">
+    <CheckBoxContainer>
       <input
         style={{
           height: '15px',
@@ -22,7 +30,7 @@ function CheckBox({ isChecked, label, onChange }: CheckBoxProps) {
         onChange={onChange}
       />
       {label}
-    </div>
+    </CheckBoxContainer>
   );
 }
 

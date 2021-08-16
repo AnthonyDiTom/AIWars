@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import '../../App.css';
 import P4 from '../../classes/P4';
 import P4IAPlayer from '../../classes/P4IaPlayer';
 import CheckBox from '../CheckBox';
 import P4Board from './P4Board';
 import Winner from './Winner';
 import { Positions } from '../../classes/Types';
+import { Page } from '../styles/globalStyles';
 
 function Puissance4Page() {
   enum CircleColor {
@@ -73,7 +73,7 @@ function Puissance4Page() {
   };
 
   return (
-    <div>
+    <Page>
       {/* <PlayerSelector defaultName="Player 1" />
       <PlayerSelector defaultName="Player 2" /> */}
       {winner === null ? (
@@ -91,7 +91,7 @@ function Puissance4Page() {
         isChecked={isPlayingWithAI}
         onChange={() => setIsPlayingWithAI(!isPlayingWithAI)}
       />
-    </div>
+    </Page>
   );
 }
 

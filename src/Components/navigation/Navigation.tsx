@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { IconContext } from 'react-icons';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import '../../App.css';
 import { RoutePath } from '../../Routes';
 
 // eslint-disable-next-line object-curly-newline
