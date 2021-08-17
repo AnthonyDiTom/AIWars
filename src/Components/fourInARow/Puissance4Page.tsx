@@ -6,6 +6,20 @@ import Winner from './Winner';
 import { Positions } from '../../classes/Types';
 import { Page } from '../styles/globalStyles';
 
+enum CircleColor {
+  playerRed = 'red',
+  playerBlue = 'blue',
+  victory = 'yellow',
+  empty = 'white',
+}
+
+interface Player {
+  color: string;
+  name: string;
+  victory: number;
+  isIA: boolean;
+}
+
 interface Puissance4PageProps {
   location: {
     state: {
@@ -15,41 +29,55 @@ interface Puissance4PageProps {
 }
 
 const Puissance4Page = ({ location }: Puissance4PageProps) => {
-  enum CircleColor {
-    playerRed = 'red',
-    playerBlue = 'blue',
-    victory = 'yellow',
-    empty = 'white',
-  }
-
   const { playerRed, playerBlue } = CircleColor;
-  const [board, setBoard] = useState(P4.newBoard);
-  const [player, setPlayer] = useState(playerRed);
-  const [winner, setWinner] = useState<string | null>(null);
-  const [isPlayingWithAI] = useState(location.state.ia);
+  const isPlayingWithAI = location.state.ia;
 
-  const setNextPlayer = () => setPlayer(player === playerRed ? playerBlue : playerRed);
+  const player1: Player = {
+    color: playerRed,
+    name: 'Joueur rouge',
+    victory: 0,
+    isIA: false,
+  };
+
+  const player2: Player = {
+    color: playerBlue,
+    name: isPlayingWithAI ? 'IA' : 'Joueur bleu',
+    victory: 0,
+    isIA: isPlayingWithAI,
+  };
+
+  const [board, setBoard] = useState(P4.newBoard);
+  const [currentPlayer, setCurrentPlayer] = useState(player1);
+  const [winner, setWinner] = useState<string | null>(null);
+
+  const setNextPlayer = () => {
+    const isPlayer1Playing = currentPlayer.color === player1.color;
+    setCurrentPlayer(isPlayer1Playing ? player2 : player1);
+  };
 
   React.useEffect(() => {
-    if (player === playerBlue && isPlayingWithAI) {
-      selectColumn(P4IAPlayer.playColumn(board, playerBlue, playerRed));
+    if (currentPlayer.isIA) {
+      setTimeout(() => {
+        selectColumn(P4IAPlayer.playColumn(board, player1.color, player2.color));
+      }, 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [player, isPlayingWithAI]);
+  }, [currentPlayer]);
 
-  function setVictory(winnerName: string, positions: Positions) {
-    setWinner(winnerName);
+  function setVictory(positions: Positions) {
+    currentPlayer.victory += 1;
     positions.forEach((value) => {
       const [row, column] = value;
       board[row][column] = CircleColor.victory;
     });
+    setWinner(currentPlayer.name);
     setBoard(board);
   }
 
   function restart() {
     setWinner(null);
     setBoard(P4.newBoard);
-    setPlayer(playerRed);
+    setCurrentPlayer(player1);
   }
 
   function selectColumn(column: number) {
@@ -58,37 +86,27 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
       return;
     }
 
-    board[row][column] = player;
+    board[row][column] = currentPlayer.color;
     setBoard(board);
 
     const winPositions = P4.winningPositionsForLastMove(row, column, board);
     if (winPositions !== null) {
-      setVictory(player, winPositions);
+      setVictory(winPositions);
+    } else {
+      setNextPlayer();
     }
-
-    setNextPlayer();
   }
-
-  const winnerName = (): string => {
-    switch (isPlayingWithAI) {
-      case true:
-        return winner === playerBlue ? 'AI' : 'Player';
-
-      default:
-        return winner || 'undefined';
-    }
-  };
 
   return (
     <Page>
       {winner === null ? (
-        `${player.toUpperCase()} plays`
+        `${currentPlayer.victory} - ${currentPlayer.name} joue`
       ) : (
-        <Winner name={winnerName().toUpperCase()} onClick={restart} />
+        <Winner name={currentPlayer.name} onClick={restart} />
       )}
       <P4Board
         board={board}
-        borderColor={winner === null ? player : CircleColor.victory}
+        borderColor={winner === null ? currentPlayer.color : CircleColor.victory}
         selectColumn={selectColumn}
       />
     </Page>

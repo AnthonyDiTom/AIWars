@@ -10,7 +10,7 @@ function Winner({ name, onClick }: WinnerProps) {
   return (
     <>
       <div>
-        <span style={{ marginRight: '16px' }}>{name} wins !</span>
+        <span style={{ marginRight: '16px' }}>{name} gagne !</span>
         <Button onClick={onClick}>Restart</Button>
       </div>
     </>
