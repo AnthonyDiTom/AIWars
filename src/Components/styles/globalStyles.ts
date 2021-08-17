@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import { color } from './colors';
 import { device } from './deviceSizes';
 
 const GlobalStyle = createGlobalStyle`
@@ -11,15 +12,20 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export const Page = styled.div`
-  background-color: #282c34;
+  background-color: ${color.background};
   text-align: center;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
+  padding-top: 100px;
   color: white;
+`;
+
+export const Title = styled.h1`
+  font-size: 1.5rem;
+  padding: 16px;
 `;
 
 export const Container = styled.div`

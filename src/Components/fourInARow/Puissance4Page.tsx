@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import P4 from '../../classes/P4';
 import P4IAPlayer from '../../classes/P4IaPlayer';
-import CheckBox from '../CheckBox';
 import P4Board from './P4Board';
 import Winner from './Winner';
 import { Positions } from '../../classes/Types';
 import { Page } from '../styles/globalStyles';
 
-function Puissance4Page() {
+interface Puissance4PageProps {
+  location: {
+    state: {
+      ia: boolean;
+    };
+  };
+}
+
+const Puissance4Page = ({ location }: Puissance4PageProps) => {
   enum CircleColor {
     playerRed = 'red',
     playerBlue = 'blue',
@@ -19,7 +26,7 @@ function Puissance4Page() {
   const [board, setBoard] = useState(P4.newBoard);
   const [player, setPlayer] = useState(playerRed);
   const [winner, setWinner] = useState<string | null>(null);
-  const [isPlayingWithAI, setIsPlayingWithAI] = useState(true);
+  const [isPlayingWithAI] = useState(location.state.ia);
 
   const setNextPlayer = () => setPlayer(player === playerRed ? playerBlue : playerRed);
 
@@ -74,8 +81,6 @@ function Puissance4Page() {
 
   return (
     <Page>
-      {/* <PlayerSelector defaultName="Player 1" />
-      <PlayerSelector defaultName="Player 2" /> */}
       {winner === null ? (
         `${player.toUpperCase()} plays`
       ) : (
@@ -86,13 +91,8 @@ function Puissance4Page() {
         borderColor={winner === null ? player : CircleColor.victory}
         selectColumn={selectColumn}
       />
-      <CheckBox
-        label="Play with AI"
-        isChecked={isPlayingWithAI}
-        onChange={() => setIsPlayingWithAI(!isPlayingWithAI)}
-      />
     </Page>
   );
-}
+};
 
 export default Puissance4Page;

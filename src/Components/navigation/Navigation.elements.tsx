@@ -3,9 +3,10 @@ import { SiElectron } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 import { Container } from '../styles/globalStyles';
 import { device } from '../styles/deviceSizes';
+import { color } from '../styles/colors';
 
 export const Nav = styled.nav`
-  background: #101522;
+  background: ${color.navigationBar};
   height: 80px;
   display: flex;
   justify-content: center;
@@ -72,7 +73,7 @@ export const NavMenu = styled.ul<NavMenuProps>`
     left: ${({ click }) => (click ? 0 : '-100%')};
     opacity: 1;
     transition: all 0.5s ease;
-    background: #101522;
+    background: ${color.navigationBar};
   }
 `;
 
@@ -81,7 +82,7 @@ export const NavItem = styled.li`
   border-bottom: 2px solid transparent;
 
   &:hover {
-    border-bottom: 2px solid #4b59f7;
+    border-bottom: 2px solid ${color.navButtonBottom};
   }
 
   @media ${device.tablet} {
@@ -93,7 +94,7 @@ export const NavItem = styled.li`
   }
 `;
 
-export const NavItemBtn = styled.li`
+export const NavItemBtn = styled.div`
   @media ${device.tablet} {
     display: flex;
     justify-content: center;
@@ -118,7 +119,7 @@ export const NavLinks = styled(Link)`
     display: table;
 
     &:hover {
-      color: #4b59f7;
+      color: ${color.navButtonBottom};
       transition: all 0.3s ease;
     }
   }

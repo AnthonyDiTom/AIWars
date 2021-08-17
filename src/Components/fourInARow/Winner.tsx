@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../styles/Button';
 
 type WinnerProps = {
   name: string;
@@ -9,16 +10,8 @@ function Winner({ name, onClick }: WinnerProps) {
   return (
     <>
       <div>
-        {name} wins !
-        <button
-          type="button"
-          style={{
-            marginLeft: '8px',
-          }}
-          onClick={onClick}
-        >
-          Restart
-        </button>
+        <span style={{ marginRight: '16px' }}>{name} wins !</span>
+        <Button onClick={onClick}>Restart</Button>
       </div>
     </>
   );

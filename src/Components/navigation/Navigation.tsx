@@ -38,11 +38,6 @@ function Navigation() {
                   <NavItemBtn>Puissance 4</NavItemBtn>
                 </NavLinks>
               </NavItem>
-              <NavItem>
-                <NavLinks to={RoutePath.p4Multiplayer}>
-                  <NavItemBtn>Multiplayer</NavItemBtn>
-                </NavLinks>
-              </NavItem>
             </NavMenu>
           </NavbarContainer>
         </Nav>
