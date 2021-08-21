@@ -3,28 +3,16 @@ import React, { useState } from 'react';
 import P4 from '../../classes/P4';
 import P4IAPlayer from '../../classes/P4IaPlayer';
 import P4Board from './P4Board';
-import Winner from './Winner';
-import { Board, Positions } from '../../classes/Types';
+import { Positions } from '../../classes/Types';
 import { Page } from '../styles/globalStyles';
+import { Game } from '../../classes/P4Game';
+import Button from '../styles/Button';
 
 enum CircleColor {
   playerRed = 'red',
   playerBlue = 'blue',
   victory = 'yellow',
   empty = 'white',
-}
-
-interface Player {
-  color: string;
-  name: string;
-  victory: number;
-  isIA: boolean;
-}
-
-interface Game {
-  board: Board;
-  player1: Player;
-  player2: Player;
 }
 
 interface Puissance4PageProps {
@@ -39,7 +27,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
   const { playerRed, playerBlue } = CircleColor;
   const isPlayingWithAI = location.state.ia;
 
-  const newGame = () => {
+  const newGame = (): Game => {
     const g = {
       board: P4.newBoard(),
       player1: {
@@ -118,7 +106,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
       {winner === null ? (
         `${currentPlayer.name} joue`
       ) : (
-        <Winner name={currentPlayer.name} onClick={restart} />
+        <span style={{ marginRight: '16px' }}>{currentPlayer.name} gagne !</span>
       )}
       <P4Board
         board={board}
@@ -126,6 +114,11 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
         selectColumn={selectColumn}
       />
       <span>{`${player1.name} ${player1.victory} - ${player2.victory} ${player2.name}`}</span>
+      {winner && (
+        <Button style={{ marginTop: '16px' }} onClick={restart}>
+          Restart
+        </Button>
+      )}
     </Page>
   );
 };
