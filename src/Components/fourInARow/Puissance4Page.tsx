@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import P4 from '../../classes/P4';
 import P4IAPlayer from '../../classes/P4IaPlayer';
 import P4Board from './P4Board';
 import Winner from './Winner';
-import { Positions } from '../../classes/Types';
+import { Board, Positions } from '../../classes/Types';
 import { Page } from '../styles/globalStyles';
 
 enum CircleColor {
@@ -20,6 +21,12 @@ interface Player {
   isIA: boolean;
 }
 
+interface Game {
+  board: Board;
+  player1: Player;
+  player2: Player;
+}
+
 interface Puissance4PageProps {
   location: {
     state: {
@@ -32,21 +39,27 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
   const { playerRed, playerBlue } = CircleColor;
   const isPlayingWithAI = location.state.ia;
 
-  const player1: Player = {
-    color: playerRed,
-    name: 'Joueur rouge',
-    victory: 0,
-    isIA: false,
+  const newGame = () => {
+    const g = {
+      board: P4.newBoard(),
+      player1: {
+        color: playerRed,
+        name: 'Rouge',
+        victory: 0,
+        isIA: false,
+      },
+      player2: {
+        color: playerBlue,
+        name: isPlayingWithAI ? 'IA' : 'Bleu',
+        victory: 0,
+        isIA: isPlayingWithAI,
+      },
+    };
+    return g;
   };
 
-  const player2: Player = {
-    color: playerBlue,
-    name: isPlayingWithAI ? 'IA' : 'Joueur bleu',
-    victory: 0,
-    isIA: isPlayingWithAI,
-  };
-
-  const [board, setBoard] = useState(P4.newBoard);
+  const [game, setGame] = useState(newGame());
+  const { player1, player2, board } = game;
   const [currentPlayer, setCurrentPlayer] = useState(player1);
   const [winner, setWinner] = useState<string | null>(null);
 
@@ -71,12 +84,15 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
       board[row][column] = CircleColor.victory;
     });
     setWinner(currentPlayer.name);
-    setBoard(board);
+    setGame(game);
   }
 
   function restart() {
     setWinner(null);
-    setBoard(P4.newBoard);
+    setGame({
+      ...game,
+      board: P4.newBoard(),
+    });
     setCurrentPlayer(player1);
   }
 
@@ -87,7 +103,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
     }
 
     board[row][column] = currentPlayer.color;
-    setBoard(board);
+    setGame(game);
 
     const winPositions = P4.winningPositionsForLastMove(row, column, board);
     if (winPositions !== null) {
@@ -100,7 +116,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
   return (
     <Page>
       {winner === null ? (
-        `${currentPlayer.victory} - ${currentPlayer.name} joue`
+        `${currentPlayer.name} joue`
       ) : (
         <Winner name={currentPlayer.name} onClick={restart} />
       )}
@@ -109,6 +125,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
         borderColor={winner === null ? currentPlayer.color : CircleColor.victory}
         selectColumn={selectColumn}
       />
+      <span>{`${player1.name} ${player1.victory} - ${player2.victory} ${player2.name}`}</span>
     </Page>
   );
 };
