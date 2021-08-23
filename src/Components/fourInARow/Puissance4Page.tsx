@@ -32,7 +32,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
       board: P4.newBoard(),
       player1: {
         color: playerRed,
-        name: 'Rouge',
+        name: isPlayingWithAI ? 'Joueur' : 'Rouge',
         victory: 0,
         isIA: false,
       },
