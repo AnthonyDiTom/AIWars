@@ -3,15 +3,23 @@ import _ from 'lodash';
 import P4 from './P4';
 import type { Board } from './Types';
 
-class P4IAPlayer {
-  static randomColumn = () => Math.floor(Math.random() * Math.floor(P4.columsNumbers - 1));
+class P4AnthoPlayer {
+  ai: string;
+  opponent: string;
 
-  static playColumn(board: Board, ai: string, opponent: string): number {
+  constructor(ai: string, opponent: string) {
+    this.ai = ai;
+    this.opponent = opponent;
+  }
+
+  randomColumn = () => Math.floor(Math.random() * Math.floor(P4.columsNumbers - 1));
+
+  getColomnToPlay(board: Board): number {
     let column = -1;
 
-    const winingPossibility = P4IAPlayer.checkAWinningPossibilityFor(ai, board);
-    const losePossibilities = this.badColomnToPlay(board, opponent);
-    const safeMoves = this.safeColomnsToPlay(board, opponent);
+    const winingPossibility = this.checkAWinningPossibilityFor(board);
+    const losePossibilities = this.badColomnToPlay(board);
+    const safeMoves = this.safeColomnsToPlay(board);
 
     console.log(`safe: ${safeMoves} other can win with: ${losePossibilities}`);
 
@@ -20,7 +28,7 @@ class P4IAPlayer {
       return winingPossibility;
     }
 
-    const winingPossibilityForOtherPlayer = P4IAPlayer.checkAWinningPossibilityFor(opponent, board);
+    const winingPossibilityForOtherPlayer = this.checkAWinningPossibilityFor(board);
 
     if (winingPossibilityForOtherPlayer !== null) {
       console.log(`other player can win at : ${winingPossibilityForOtherPlayer}`);
@@ -32,14 +40,14 @@ class P4IAPlayer {
       return 3;
     }
 
-    if (this.opponentControlTheCenter(board, ai, opponent)) {
+    if (this.opponentControlTheCenter(board)) {
       console.log('I prevent _ _ x x x _ _ winning case');
       return _.shuffle([2, 4])[0];
     }
 
     if (safeMoves.length === 0) {
       console.log('I m foutu');
-      [column] = this.badColomnToPlay(board, opponent);
+      [column] = this.badColomnToPlay(board);
     } else {
       [column] = _.shuffle(safeMoves);
       console.log(`I m playing safe move: ${column}`);
@@ -49,12 +57,12 @@ class P4IAPlayer {
 
   /* control the center */
 
-  static canControlTheCenter(board: Board): boolean {
-    return board[P4.rowsNumber - 1][3] === '';
-  }
+  canControlTheCenter = (board: Board) => board[P4.rowsNumber - 1][3] === '';
 
-  static opponentControlTheCenter(board: Board, ia: string, opponent: string): boolean {
-    return board[P4.rowsNumber - 1][3] === opponent && !board[P4.rowsNumber - 1].includes(ia);
+  opponentControlTheCenter(board: Board): boolean {
+    return (
+      board[P4.rowsNumber - 1][3] === this.opponent && !board[P4.rowsNumber - 1].includes(this.ai)
+    );
   }
   /*
    to avoid or create ' ', ' ', 'red', 'red' ,'red', ' ' case to win
@@ -69,7 +77,7 @@ class P4IAPlayer {
   // }
 
   /* return colums of other player can't win if ia play it */
-  static safeColomnsToPlay(board: Board, opponent: string): number[] {
+  safeColomnsToPlay(board: Board): number[] {
     const safePlayColumn: number[] = [];
 
     for (let columnIndex = 0; columnIndex < P4.columsNumbers; columnIndex++) {
@@ -77,7 +85,7 @@ class P4IAPlayer {
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
         boardCopy[row][columnIndex] = 'blue';
-        if (P4IAPlayer.checkAWinningPossibilityFor(opponent, boardCopy) === null) {
+        if (this.checkAWinningPossibilityFor(this.opponent, boardCopy) === null) {
           safePlayColumn.push(columnIndex);
         }
       }
@@ -86,7 +94,7 @@ class P4IAPlayer {
   }
 
   /* return colums of other player can win if ia play it */
-  static badColomnToPlay(board: Board, opponent: string): number[] {
+  badColomnToPlay(board: Board): number[] {
     const forbiddenPlay: number[] = [];
 
     for (let columnIndex = 0; columnIndex < P4.columsNumbers; columnIndex++) {
@@ -94,7 +102,7 @@ class P4IAPlayer {
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
         boardCopy[row][columnIndex] = 'blue';
-        if (P4IAPlayer.checkAWinningPossibilityFor(opponent, boardCopy) !== null) {
+        if (this.checkAWinningPossibilityFor(this.opponent, boardCopy) !== null) {
           forbiddenPlay.push(columnIndex);
         }
       }
@@ -102,13 +110,13 @@ class P4IAPlayer {
     return forbiddenPlay;
   }
 
-  static checkAWinningPossibilityFor(player: string, board: Board): number | null {
+  checkAWinningPossibilityFor(board: Board): number | null {
     for (let col = 0; col < P4.columsNumbers; col++) {
       const availableRow = P4.availableRowIn(board, col);
 
       if (availableRow !== -1) {
         const boardCopy = _.cloneDeep(board);
-        boardCopy[availableRow][col] = player;
+        boardCopy[availableRow][col] = this.opponent;
         const winningPositions = P4.winningPositionsForLastMove(availableRow, col, boardCopy);
         if (winningPositions != null) {
           return col;
@@ -119,4 +127,4 @@ class P4IAPlayer {
   }
 }
 
-export default P4IAPlayer;
+export default P4AnthoPlayer;
