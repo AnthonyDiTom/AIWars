@@ -85,7 +85,7 @@ class P4AnthoPlayer {
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
         boardCopy[row][columnIndex] = 'blue';
-        if (this.checkAWinningPossibilityFor(this.opponent, boardCopy) === null) {
+        if (this.checkAWinningPossibilityFor(boardCopy) === null) {
           safePlayColumn.push(columnIndex);
         }
       }
@@ -102,7 +102,7 @@ class P4AnthoPlayer {
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
         boardCopy[row][columnIndex] = 'blue';
-        if (this.checkAWinningPossibilityFor(this.opponent, boardCopy) !== null) {
+        if (this.checkAWinningPossibilityFor(boardCopy) !== null) {
           forbiddenPlay.push(columnIndex);
         }
       }

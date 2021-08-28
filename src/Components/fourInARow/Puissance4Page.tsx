@@ -7,6 +7,7 @@ import { Positions } from '../../classes/Types';
 import { Page } from '../styles/globalStyles';
 import { Game } from '../../classes/P4Game';
 import Button from '../styles/Button';
+import P4AnthoPlayer from '../../classes/P4AnthoPlayer';
 
 enum CircleColor {
   playerRed = 'red',
@@ -38,7 +39,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
       },
       player2: {
         color: playerBlue,
-        name: isPlayingWithAI ? 'IA' : 'Bleu',
+        name: isPlayingWithAI ? 'Anthony' : 'Bleu',
         victory: 0,
         isIA: isPlayingWithAI,
       },
@@ -50,6 +51,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
   const { player1, player2, board } = game;
   const [currentPlayer, setCurrentPlayer] = useState(player1);
   const [winner, setWinner] = useState<string | null>(null);
+  const ia = isPlayingWithAI ? new P4AnthoPlayer(player2.color, player1.color) : null;
 
   const setNextPlayer = () => {
     const isPlayer1Playing = currentPlayer.color === player1.color;
@@ -59,7 +61,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
   React.useEffect(() => {
     if (currentPlayer.isIA) {
       setTimeout(() => {
-        selectColumn(P4IAPlayer.playColumn(board, player1.color, player2.color));
+        selectColumn(ia?.getColomnToPlay(board) ?? 0);
       }, 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
