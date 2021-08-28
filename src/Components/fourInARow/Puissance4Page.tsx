@@ -116,7 +116,7 @@ const Puissance4Page = ({ location }: Puissance4PageProps) => {
         selectColumn={selectColumn}
       />
       <span>{`${player1.name} ${player1.victory} - ${player2.victory} ${player2.name}`}</span>
-      {winner && (
+      {(winner || P4.boardIsComplete(board)) && (
         <Button style={{ marginTop: '16px' }} onClick={restart}>
           Restart
         </Button>

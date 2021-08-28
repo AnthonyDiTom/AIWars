@@ -35,6 +35,16 @@ class P4 {
     return availableRows;
   }
 
+  static boardIsComplete(board: Board): boolean {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const colomn of board[0]) {
+      if (colomn === '') {
+        return false;
+      }
+    }
+    return true;
+  }
+
   // TODO : duplicate code
   static winningPositionsForLastMove(row: number, column: number, board: Board): Positions | null {
     let currentPlayer = '';
