@@ -47,7 +47,7 @@ class P4AnthoPlayer {
     }
 
     if (this.opponentControlTheCenter(board)) {
-      console.log('I prevent _ _ x x x _ _ winning case');
+      console.log('I prevent _ _ x x x _ _ winning case'); // TO DO: create the situation if possible
       return _.shuffle([2, 4])[0];
     }
 

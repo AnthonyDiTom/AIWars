@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import P4 from '../../classes/P4';
-import P4IAPlayer from '../../classes/P4IaPlayer';
 import P4Board from './P4Board';
 import { Positions } from '../../classes/Types';
 import { Page } from '../styles/globalStyles';
