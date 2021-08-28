@@ -17,22 +17,28 @@ class P4AnthoPlayer {
   getColomnToPlay(board: Board): number {
     let column = -1;
 
-    const winingPossibility = this.checkAWinningPossibilityFor(board);
+    const winingPossibilityForAi = P4AnthoPlayer.checkAWinningPossibilityFor(this.ai, board);
+
+    const winingPossibilityForOpponent = P4AnthoPlayer.checkAWinningPossibilityFor(
+      this.opponent,
+      board,
+    );
+
     const losePossibilities = this.badColomnToPlay(board);
     const safeMoves = this.safeColomnsToPlay(board);
 
-    console.log(`safe: ${safeMoves} other can win with: ${losePossibilities}`);
+    console.log(
+      `safe: ${safeMoves} bad: ${losePossibilities} opponent can win: ${winingPossibilityForOpponent}`,
+    );
 
-    if (winingPossibility !== null) {
-      console.log(`wining possibility : ${winingPossibility}`);
-      return winingPossibility;
+    if (winingPossibilityForAi !== null) {
+      console.log(`I play to win! col ${winingPossibilityForAi}`);
+      return winingPossibilityForAi;
     }
 
-    const winingPossibilityForOtherPlayer = this.checkAWinningPossibilityFor(board);
-
-    if (winingPossibilityForOtherPlayer !== null) {
-      console.log(`other player can win at : ${winingPossibilityForOtherPlayer}`);
-      return winingPossibilityForOtherPlayer;
+    if (winingPossibilityForOpponent !== null) {
+      console.log(`I prevent wining possibility for oponent col ${winingPossibilityForOpponent}`);
+      return winingPossibilityForOpponent;
     }
 
     if (this.canControlTheCenter(board)) {
@@ -47,10 +53,10 @@ class P4AnthoPlayer {
 
     if (safeMoves.length === 0) {
       console.log('I m foutu');
-      [column] = this.badColomnToPlay(board);
+      [column] = losePossibilities;
     } else {
       [column] = _.shuffle(safeMoves);
-      console.log(`I m playing safe move: ${column}`);
+      console.log(`I m playing safe move col ${column}`);
     }
     return column;
   }
@@ -84,8 +90,8 @@ class P4AnthoPlayer {
       const row = P4.availableRowIn(board, columnIndex);
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
-        boardCopy[row][columnIndex] = 'blue';
-        if (this.checkAWinningPossibilityFor(boardCopy) === null) {
+        boardCopy[row][columnIndex] = this.ai;
+        if (P4AnthoPlayer.checkAWinningPossibilityFor(this.opponent, boardCopy) === null) {
           safePlayColumn.push(columnIndex);
         }
       }
@@ -101,8 +107,8 @@ class P4AnthoPlayer {
       const row = P4.availableRowIn(board, columnIndex);
       if (row !== -1) {
         const boardCopy = _.cloneDeep(board);
-        boardCopy[row][columnIndex] = 'blue';
-        if (this.checkAWinningPossibilityFor(boardCopy) !== null) {
+        boardCopy[row][columnIndex] = this.ai;
+        if (P4AnthoPlayer.checkAWinningPossibilityFor(this.opponent, boardCopy) !== null) {
           forbiddenPlay.push(columnIndex);
         }
       }
@@ -110,13 +116,13 @@ class P4AnthoPlayer {
     return forbiddenPlay;
   }
 
-  checkAWinningPossibilityFor(board: Board): number | null {
+  static checkAWinningPossibilityFor(player: string, board: Board): number | null {
     for (let col = 0; col < P4.columsNumbers; col++) {
       const availableRow = P4.availableRowIn(board, col);
 
       if (availableRow !== -1) {
         const boardCopy = _.cloneDeep(board);
-        boardCopy[availableRow][col] = this.opponent;
+        boardCopy[availableRow][col] = player;
         const winningPositions = P4.winningPositionsForLastMove(availableRow, col, boardCopy);
         if (winningPositions != null) {
           return col;
